@@ -1,25 +1,4 @@
-// http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-function shuffle(array) {
-  var currentIndex = array.length
-    , temporaryValue
-    , randomIndex
-    ;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
+const maxFlip = 2; //only two cards at a time
 
 function createDeck(numberOfCards) {      // creates a randomized card deck
   let deck = []
@@ -38,7 +17,7 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
   return deck;
 }
 
-isAMatch(deck){  //to be called after two cards are flipped, goes through the deck and finds the two flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
+isAMatch(deck){  //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
   let currentPair = [];
   for (let i=0;i<deck.length;i++){    //goes through the deck
     if (deck[i].hidden == false && deck[i].solved == false){ //if the current card is active but not solved...
@@ -58,7 +37,6 @@ isAMatch(deck){  //to be called after two cards are flipped, goes through the de
   }
 }
 
-const maxFlip = 2; //only two cards at a time
 
 let gameSize = 20;
 let gameDeck = createDeck(gameSize);
