@@ -61,7 +61,7 @@ function doTheyMatch(deck){
     }
   }
 
-  for (let i=1;i<currentSet.length;i++){
+  for (let i=0;i<currentSet.length;i++){
     if (isMatch){     //if they matched, mark them solved
       deck[currentSet[i]].solved = true;
     }
@@ -79,8 +79,8 @@ console.log("Game set")
 console.log(gameDeck);
 
 
-gameDeck[0].flipped = true;
-gameDeck[1].flipped = true;
+gameDeck[0].hidden = false;
+gameDeck[1].hidden = false;
 
 console.log("Flipped two cards")
 console.log(gameDeck);
