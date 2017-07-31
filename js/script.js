@@ -22,8 +22,8 @@ function shuffle(array) {
 }
 
 
-gameIsRunning = true;
-youWin = false;
+let gameIsRunning = true;
+let youWin = false;
 
 const maxFlip = 2; //only two cards at a time
 
@@ -88,7 +88,24 @@ gameDeck[1].flipped = true;
 console.log("Flipped two cards")
 console.log(gameDeck);
 
-doTheyMatch(gameDeck);
+// doTheyMatch(gameDeck);
+//
+// console.log("Performed Check")
+// console.log(gameDeck);
 
-console.log("Performed Check")
-console.log(gameDeck);
+let boardList = document.getElementById("board-list");
+
+for (let i=0;i<gameDeck.length;i++){
+  let li = document.createElement("li");
+  let liText = document.createElement("h1");
+  let liTextContent = document.createTextNode(gameDeck[i].symbolID);
+  if (gameDeck[i].flipped){liText.style.color = "red"};
+  if (gameDeck[i].solved){liText.style.color = "green"};
+
+
+
+  liText.appendChild(liTextContent);
+  li.appendChild(liText);
+  boardList.appendChild(li);
+
+}
