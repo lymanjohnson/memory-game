@@ -45,6 +45,7 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 }
 
 //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
+
 function doTheyMatch(deck){
 
   let isMatch = true; //assume for the time being it's a match
@@ -74,49 +75,60 @@ function doTheyMatch(deck){
   }
 }
 
+// STARTS GAME //
 
-let gameSize = 6;
-let gameDeck = createDeck(gameSize);
-//
-// console.log("Game set")
-// console.log(gameDeck);
-//
-//
-// gameDeck[0].flipped = true;
-// gameDeck[1].flipped = true;
-//
-// console.log("Flipped two cards")
-// console.log(gameDeck);
-//
-// doTheyMatch(gameDeck);
-//
-// console.log("Performed Check")
-// console.log(gameDeck);
+  let currentFlippedCards = 0;
+  let gameSize = 6;
+  let gameDeck = createDeck(gameSize);
 
+  let boardList = document.getElementById("board-list");
 
+  for (let i=0;i<gameDeck.length;i++){
+    let li = document.createElement("li");
+    let liText = document.createElement("h1");
+    let liTextContent = document.createTextNode(gameDeck[i].symbolID);
 
-let boardList = document.getElementById("board-list");
+    li.addEventListener('click', clickFunction);
+    li.cardIndex = i;
+    li.flipped = "no";
+    li.solved = "no";
 
-for (let i=0;i<gameDeck.length;i++){
-  let li = document.createElement("li");
-  let liText = document.createElement("h1");
-  let liTextContent = document.createTextNode(gameDeck[i].symbolID);
-  // if (gameDeck[i].flipped){liText.style.color = "red"};
-  // if (gameDeck[i].solved){liText.style.color = "green"};
+    liText.appendChild(liTextContent);
+    li.appendChild(liText);
+    boardList.appendChild(li);
+  }
 
-
-  li.addEventListener('click', clickFunction);
-
-  liText.appendChild(liTextContent);
-  li.appendChild(liText);
-  boardList.appendChild(li);
-
-}
 
 function clickFunction() {
   console.log("Click!!",);
+  console.log(this.cardIndex);
+  console.log("Was solved?",this.solved)
+  console.log("Was flipped?",this.flipped)
+  if (gameDeck[this.cardIndex].flipped == false){
+    gameDeck[this.cardIndex].flipped = true;
+    currentFlippedCards += 1;
+  }
+
+  refresh();
+
+  console.log("Is solved?",this.solved)
+  console.log("Is flipped?",this.flipped)
+
 }
-//
-// while gameIsRunning {
-//
-// }
+
+
+function refresh() {
+
+  for (let i=0;i<gameDeck.length;i++){
+
+    let backEndCard = gameDeck[i];
+    let frontEndCard = document.getElementsByTagName("li")[i];
+
+    frontEndCard.flipped = backEndCard.flipped ? 'yes' : 'no';
+    frontEndCard.solved = backEndCard.solved ? 'yes' : 'no';
+
+
+  }
+
+
+}
