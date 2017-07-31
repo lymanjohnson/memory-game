@@ -44,10 +44,23 @@ doTheyMatch(deck){  //to be called after requisite number of cards are flipped, 
       deck[currentSet[i]].hidden = true;
     }
   }
-
 }
 
 
-let gameSize = 20;
+let gameSize = 6;
 let gameDeck = createDeck(gameSize);
+
+console.log("Game set")
+console.log(gameDeck);
+
+
+gameDeck[0].flipped = true;
+gameDeck[1].flipped = true;
+
+console.log("Flipped two cards")
+console.log(gameDeck);
+
+doTheyMatch(gameDeck);
+
+console.log("Performed Check")
 console.log(gameDeck);
