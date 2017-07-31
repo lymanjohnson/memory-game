@@ -22,6 +22,9 @@ function shuffle(array) {
 }
 
 
+gameIsRunning = true;
+youWin = false;
+
 const maxFlip = 2; //only two cards at a time
 
 function createDeck(numberOfCards) {      // creates a randomized card deck
@@ -32,8 +35,8 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
   }
   // console.log(numberOfCards);
   for (let i=0;i<(numberOfCards/maxFlip); i++){
-    deck.push({"symbolID":i,"hidden":true,"solved":false});
-    deck.push({"symbolID":i,"hidden":true,"solved":false});
+    deck.push({"symbolID":i,"flipped":false,"solved":false});
+    deck.push({"symbolID":i,"flipped":false,"solved":false});
     // console.log(i);
     // console.log(deck);
   }
@@ -48,7 +51,7 @@ function doTheyMatch(deck){
   let currentSet = []; //this will track indices of the flipped cards
 
   for (let i=0;i<deck.length;i++){    //goes through the deck
-    if (deck[i].hidden == false && deck[i].solved == false){ //if the current card is active but not solved...
+    if (deck[i].flipped == true && deck[i].solved == false){ //if the current card is active but not solved...
       currentSet.push(i); //it stores the card's index. This should happen as many times as maxFlip.
     }
   }
@@ -66,7 +69,7 @@ function doTheyMatch(deck){
       deck[currentSet[i]].solved = true;
     }
     else {            // otherwise flip them back over
-      deck[currentSet[i]].hidden = true;
+      deck[currentSet[i]].flipped = false;
     }
   }
 }
@@ -79,8 +82,8 @@ console.log("Game set")
 console.log(gameDeck);
 
 
-gameDeck[0].hidden = false;
-gameDeck[1].hidden = false;
+gameDeck[0].flipped = true;
+gameDeck[1].flipped = true;
 
 console.log("Flipped two cards")
 console.log(gameDeck);
