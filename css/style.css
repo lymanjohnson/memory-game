@@ -1,0 +1,13 @@
+ul{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+li {
+  text-align: center;
+  list-style-type: none;
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  border: 2px solid blue;
+}

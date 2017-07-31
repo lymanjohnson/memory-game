@@ -77,21 +77,23 @@ function doTheyMatch(deck){
 
 let gameSize = 6;
 let gameDeck = createDeck(gameSize);
-
-console.log("Game set")
-console.log(gameDeck);
-
-
-gameDeck[0].flipped = true;
-gameDeck[1].flipped = true;
-
-console.log("Flipped two cards")
-console.log(gameDeck);
-
+//
+// console.log("Game set")
+// console.log(gameDeck);
+//
+//
+// gameDeck[0].flipped = true;
+// gameDeck[1].flipped = true;
+//
+// console.log("Flipped two cards")
+// console.log(gameDeck);
+//
 // doTheyMatch(gameDeck);
 //
 // console.log("Performed Check")
 // console.log(gameDeck);
+
+
 
 let boardList = document.getElementById("board-list");
 
@@ -99,13 +101,22 @@ for (let i=0;i<gameDeck.length;i++){
   let li = document.createElement("li");
   let liText = document.createElement("h1");
   let liTextContent = document.createTextNode(gameDeck[i].symbolID);
-  if (gameDeck[i].flipped){liText.style.color = "red"};
-  if (gameDeck[i].solved){liText.style.color = "green"};
+  // if (gameDeck[i].flipped){liText.style.color = "red"};
+  // if (gameDeck[i].solved){liText.style.color = "green"};
 
 
+  li.addEventListener('click', clickFunction);
 
   liText.appendChild(liTextContent);
   li.appendChild(liText);
   boardList.appendChild(li);
 
 }
+
+function clickFunction() {
+  console.log("Click!!",);
+}
+//
+// while gameIsRunning {
+//
+// }
