@@ -87,11 +87,12 @@ function doTheyMatch(deck){
     let li = document.createElement("li");
     let liText = document.createElement("h1");
     let liTextContent = document.createTextNode(gameDeck[i].symbolID);
-
-    li.addEventListener('click', clickFunction);
     li.cardIndex = i;
     li.flipped = "no";
     li.solved = "no";
+
+    li.addEventListener('click', clickFunction);
+
 
     liText.appendChild(liTextContent);
     li.appendChild(liText);
@@ -110,7 +111,7 @@ function clickFunction() {
   }
 
   refresh();
-
+  console.log(this);
   console.log("Is solved?",this.solved)
   console.log("Is flipped?",this.flipped)
 

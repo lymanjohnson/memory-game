@@ -22,7 +22,18 @@ li[flipped='no'] h1{
   color: blue;
 }
 
+li[flipped='yes']{
+  background-color: red;
+  color: blue;
+}
+
+li[flipped='no']{
+  background-color: blue;
+  color: blue;
+}
+
+/*
 li[flipped] h1{
   background-color: green;
   color: blue;
-}
+}*/
