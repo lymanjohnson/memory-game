@@ -127,7 +127,6 @@ function refresh() {
     frontEndCard.flipped = backEndCard.flipped ? 'yes' : 'no';
     frontEndCard.solved = backEndCard.solved ? 'yes' : 'no';
 
-
   }
 
 
