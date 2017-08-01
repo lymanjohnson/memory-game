@@ -109,7 +109,16 @@ function refresh() {
 
     frontEndCard.status = backEndCard.status;
     frontEndCard.setAttribute("class",frontEndCard.status);
+
+    if (frontEndCard.status == "solved") {
+      frontEndCard.lastChild.setAttribute("src","img/493 Arceus Water.ico");
+      console.log("solved card here");
+      console.log(frontEndCard);
+    }
+
   }
+
+
 
 }
 
