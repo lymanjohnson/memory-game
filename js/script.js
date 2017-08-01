@@ -67,8 +67,8 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 
   for (let i=0;i<gameDeck.length;i++){
     let li = document.createElement("li");
-    let liText = document.createElement("h1");
-    let liTextContent = document.createTextNode(gameDeck[i].symbolID);
+    // let liText = document.createElement("h1");
+    // let liTextContent = document.createTextNode(gameDeck[i].symbolID);
     let liImage = document.createElement("img");
 
     liImage.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
@@ -83,24 +83,14 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
     li.addEventListener('click', clickFunction);
 
 
-    liText.appendChild(liTextContent);
-    li.appendChild(liText);
+    // liText.appendChild(liTextContent);
+    // li.appendChild(liText);
     li.appendChild(liImage);
     boardList.appendChild(li);
   }
 
 
 function refresh() {
-
-  if (currentFlippedCards.length >= maxFlip) {  // if the flipped hand reaches the limit...
-    if (isAMatch(currentFlippedCards)){         // see if the hand is a match
-      markCardsSolved(currentFlippedCards);     // if so, solve them
-    }
-    else {
-      markCardsHidden(currentFlippedCards);     //
-    }
-    currentFlippedCards = [];
-  }
 
   for (let i=0;i<gameDeck.length;i++){
 
@@ -112,15 +102,33 @@ function refresh() {
 
     if (frontEndCard.status == "solved") {
       frontEndCard.lastChild.setAttribute("src","img/493 Arceus Water.ico");
-      console.log("solved card here");
-      console.log(frontEndCard);
+      // console.log("solved card here");
+      // console.log(frontEndCard);
+    }
+
+    if (frontEndCard.status == "hidden") {
+      frontEndCard.lastChild.setAttribute("src","img/logo.jpg");
+    }
+
+    if (frontEndCard.status == "flipped") {
+      frontEndCard.lastChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
+    }
+
+    if (currentFlippedCards.length >= maxFlip) {  // if the flipped hand reaches the limit...
+      if (isAMatch(currentFlippedCards)){         // see if the hand is a match
+        markCardsSolved(currentFlippedCards);     // if so, solve them
+      }
+      else {
+        markCardsHidden(currentFlippedCards);     //
+      }
+      currentFlippedCards = [];
     }
 
   }
 
-
-
 }
+
+
 
 function isAMatch (hand){     // hand will be an array that contains the indices of the flipped cards
   let symbolToMatch = gameDeck[hand[0]].symbolID;
