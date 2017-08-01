@@ -93,6 +93,8 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 
 function refresh() {
 
+    // this.firstChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[this.cardIndex].symbolID])+".ico"); //makes its image into the right pokemon
+
   if (currentFlippedCards.length >= maxFlip) {  // if the flipped hand reaches the limit...
     if (isAMatch(currentFlippedCards)){         // see if the hand is a match
       markCardsSolved(currentFlippedCards);     // if so, solve them
@@ -110,6 +112,20 @@ function refresh() {
 
     frontEndCard.status = backEndCard.status;
     frontEndCard.setAttribute("class",frontEndCard.status);
+
+    if (frontEndCard.status == "hidden"){
+      frontEndCard.firstChild.setAttribute("src","img/logo.jpg");
+    }
+
+    else if (frontEndCard.status == "solved"){
+      frontEndCard.firstChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[this.cardIndex].symbolID])+".ico");
+      console.log("hi")
+    }
+
+    else if (frontEndCard.status == "flipped"){
+      frontEndCard.firstChild.setAttribute("src","");
+    }
+
   }
 
 }
@@ -139,7 +155,6 @@ function markCardsSolved (hand) {   // hand will be an array that contains the i
 function markCardsHidden (hand) {   // hand will be an array that contains the indices of the flipped cards
   for (let i=0;i<hand.length;i++){
     gameDeck[hand[i]].status = "hidden";
-    this.firstChild.setAttribute("src","img/logo.jpg");
   }
 }
 
@@ -148,7 +163,6 @@ function clickFunction() {
   if (gameDeck[this.cardIndex].status == "hidden"){
     gameDeck[this.cardIndex].status = "flipped";
     currentFlippedCards.push(this.cardIndex);
-    this.firstChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[this.cardIndex].symbolID])+".ico"); //makes its image into the right pokemon
   }
 
   refresh();
