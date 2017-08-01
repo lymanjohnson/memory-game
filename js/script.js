@@ -17,7 +17,6 @@ function shuffle(array) {
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
-
   return array;
 }
 
@@ -46,38 +45,11 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 
 //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
 
-function doTheyMatch(deck){
 
-  let isMatch = true; //assume for the time being it's a match
-  let currentSet = []; //this will track indices of the flipped cards
-
-  for (let i=0;i<deck.length;i++){    //goes through the deck
-    if (deck[i].status == "flipped"){ //if the current card is active but not solved...
-      currentSet.push(i); //it stores the card's index. This should happen as many times as maxFlip.
-    }
-  }
-
-  let symbolToMatch = deck[currentSet[0]].symbolID; // stores the first selected card's symbol
-
-  for (let i=1;i<currentSet.length;i++){  //goes through the flipped cards
-    if (deck[currentSet[i]].symbolID != symbolToMatch) {// if the current card doesn't match the first flipped card...
-    isMatch = false; //then there's no match
-    }
-  }
-
-  for (let i=0;i<currentSet.length;i++){
-    if (isMatch){     //if they matched, mark them solved
-      deck[currentSet[i]].status = "solved";
-    }
-    else {            // otherwise flip them back over
-      deck[currentSet[i]].status = "hidden";
-    }
-  }
-}
 
 // STARTS GAME //
 
-  let currentFlippedCards = 0;
+  let currentFlippedCards = [];
   let gameSize = 6;
   let gameDeck = createDeck(gameSize);
 
@@ -87,6 +59,12 @@ function doTheyMatch(deck){
     let li = document.createElement("li");
     let liText = document.createElement("h1");
     let liTextContent = document.createTextNode(gameDeck[i].symbolID);
+
+    li.setAttribute("class","hidden");
+    li.setAttribute("id",("card-"+i));
+
+        // The rest of this JS is easier to code if we give each li these hidden "cardIndex" and "status" properties, in addition to their class and id. Functionally "cardIndex" property should always correspond to the "id" attribute, and the "status" to the "class".
+
     li.cardIndex = i;
     li.status = "hidden";
 
@@ -99,22 +77,6 @@ function doTheyMatch(deck){
   }
 
 
-function clickFunction() {
-  console.log("Click!!",);
-  console.log(this.cardIndex);
-  console.log("Was solved?",this.status)
-  if (gameDeck[this.cardIndex].status == "hidden"){
-    gameDeck[this.cardIndex].status = "flipped";
-    currentFlippedCards += 1;
-  }
-
-  refresh();
-  console.log(this);
-  console.log("Is solved?",this.status)
-
-}
-
-
 function refresh() {
 
   for (let i=0;i<gameDeck.length;i++){
@@ -123,7 +85,105 @@ function refresh() {
     let frontEndCard = document.getElementsByTagName("li")[i];
 
     frontEndCard.status = backEndCard.status;
+    frontEndCard.setAttribute("class",frontEndCard.status);
   }
 
+  if (currentFlippedCards.length >= maxFlip) {  // if the flipped hand reaches the limit...
+    if (isAMatch(currentFlippedCards)){         // see if the hand is a match
+      markCardsSolved(currentFlippedCards);     // if so, solve them
+    }
+    else {
+      markCardsHidden(currentFlippedCards);     //
+    }
+  }
 
 }
+
+function isAMatch (hand){     // hand will be an array that contains the indices of the flipped cards
+  let symbolToMatch = gameDeck[hand[0]].symbolID;
+  console.log("hand:",hand);
+  console.log("hand[0]:",hand[0]);
+  console.log("gameDeck[hand[0]]:",gameDeck[hand[0]]);
+  console.log('gameDeck[hand[0]].symbolID:',gameDeck[hand[0]].symbolID);
+  console.log("symbol to match:",symbolToMatch);
+  for (i=0;i<hand.length;i++){
+    console.log("going through loop",i,"here's the card we're looking at");
+    console.log("hand:",hand);
+    console.log("hand[i]:",hand[i]);
+    console.log("gameDeck[hand[i]]:",gameDeck[hand[i]]);
+    console.log('gameDeck[hand[i]].symbolID:',gameDeck[hand[i]].symbolID);
+    console.log("symbol to match:",symbolToMatch);
+    if (gameDeck[hand[0]].symbolID != symbolToMatch) {
+      console.log("not a match!");
+      return false;
+    }
+  }
+  console.log("its a match!");
+  return true;
+}
+
+
+function clickFunction() {
+  console.log("Before Click");
+  console.log("Current hand:",currentFlippedCards);
+  console.log("Index Property:",this.cardIndex);
+  console.log("Id Attribute:",this.getAttribute("id"));
+  console.log("Status Property",this.status);
+  console.log("Class attribute",this.getAttribute("class"));
+
+  console.log("Click!!",);
+  console.log("After click:",);
+
+  if (gameDeck[this.cardIndex].status == "hidden"){
+    gameDeck[this.cardIndex].status = "flipped";
+    currentFlippedCards.push(this.cardIndex);
+  }
+  console.log("After click, before refresh:");
+  console.log("Current hand:",currentFlippedCards);
+  console.log("Index Property:",this.cardIndex);
+  console.log("Id Attribute:",this.getAttribute("id"));
+  console.log("Status Property",this.status);
+  console.log("Class attribute",this.getAttribute("class"));
+
+  refresh();
+
+  console.log("After refresh");
+  console.log("Current hand:",currentFlippedCards);
+  console.log("Index Property:",this.cardIndex);
+  console.log("Id Attribute:",this.getAttribute("id"));
+  console.log("Status Property",this.status);
+  console.log("Class attribute",this.getAttribute("class"));
+
+}
+
+
+
+
+// function doTheyMatch(){
+//
+//   let isMatch = true; //assume for the time being it's a match
+//   let currentSet = []; //this will track indices of the flipped cards
+//
+//   for (let i=0;i<gameDeck.length;i++){    //goes through the deck
+//     if (gameDeck[i].status == "flipped"){ //if the current card is active but not solved...
+//       currentSet.push(i); //it stores the card's index. This should happen as many times as maxFlip.
+//     }
+//   }
+//
+//   let symbolToMatch = gameDeck[currentSet[0]].symbolID; // stores the first selected card's symbol
+//
+//   for (let i=1;i<currentSet.length;i++){  //goes through the flipped cards
+//     if (gameDeck[currentSet[i]].symbolID != symbolToMatch) {// if the current card doesn't match the first flipped card...
+//     isMatch = false; //then there's no match
+//     }
+//   }
+//
+//   for (let i=0;i<currentSet.length;i++){
+//     if (isMatch){     //if they matched, mark them solved
+//       gameDeck[currentSet[i]].status = "solved";
+//     }
+//     else {            // otherwise flip them back over
+//       gameDeck[currentSet[i]].status = "hidden";
+//     }
+//   }
+// }

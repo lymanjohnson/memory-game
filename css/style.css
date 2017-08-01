@@ -13,12 +13,17 @@ li {
 }
 
 .hidden {
-
+  background-color: black;
+  color: grey;
 }
 
-.solved{}
+.solved{
+  background-color: green;
+}
 
-.flipped{}
+.flipped{
+  background-color: white;
+}
 
 /*
 li[flipped] h1{
