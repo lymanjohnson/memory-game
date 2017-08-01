@@ -20,21 +20,29 @@ function shuffle(array) {
   return array;
 }
 
-function threeDigitNumber(num){
+//https://stackoverflow.com/questions/2998784/how-to-output-integers-with-leading-zeros-in-javascript
+function threeDigitNumber(num){ //returns a 3 digit number with leading zeros e.g. 7 => 007
   return ("00" + num).slice (-3);
 }
-
-
 
 let gameIsRunning = true;
 let youWin = false;
 
+function createPokemonStack(){ //this creates a randomized array containing the numbers 1-493, which will allow the cards in the memory game to refer to a fresh pokemon by their indexID
+  let stack = [];
+  for (i=1;i<=30;i++){  //there are 493 pokemon (NOTE:change this back to 493 later)
+    stack.push(i);
+  }
+  shuffle(stack);
+  return stack;
+}
 
+pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
 
 function createDeck(numberOfCards) {      // creates a randomized card deck
   let deck = []
   // console.log(deck);
-  while(numberOfCards%maxFlip != 0){  //there must be an even number of cards
+  while(numberOfCards%maxFlip != 0){  //Number of cards must be a multiple of the amount you need to match in a hand
     numberOfCards += 1; //keeps adding cards until there's the right amount
   }
   // console.log(numberOfCards);
@@ -61,7 +69,9 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
     let li = document.createElement("li");
     let liText = document.createElement("h1");
     let liTextContent = document.createTextNode(gameDeck[i].symbolID);
+    let liImage = document.createElement("img");
 
+    liImage.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
     li.setAttribute("class","hidden");
     li.setAttribute("id",("card-"+i));
 
@@ -75,6 +85,7 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 
     liText.appendChild(liTextContent);
     li.appendChild(liText);
+    li.appendChild(liImage);
     boardList.appendChild(li);
   }
 

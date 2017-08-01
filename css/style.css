@@ -9,20 +9,27 @@ li {
   width: 100px;
   height: 100px;
   margin: 20px;
-  border: 2px solid blue;
+  border-style: double;
+  border-width: 5px;
+  padding: 0px;
 }
 
 .hidden {
-  background-color: black;
-  color: grey;
+  border-color: black;
 }
 
 .solved{
-  background-color: green;
+  border-color: green;
 }
 
 .flipped{
-  background-color: white;
+  border-color: red;
+}
+
+li img {
+  width: 90%;
+  margin-top: -80%;
+
 }
 
 /*
