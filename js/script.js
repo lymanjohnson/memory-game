@@ -20,11 +20,8 @@ function shuffle(array) {
   return array;
 }
 
-
 let gameIsRunning = true;
 let youWin = false;
-
-const maxFlip = 2; //only two cards at a time
 
 function createDeck(numberOfCards) {      // creates a randomized card deck
   let deck = []
@@ -34,10 +31,9 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
   }
   // console.log(numberOfCards);
   for (let i=0;i<(numberOfCards/maxFlip); i++){
-    deck.push({"symbolID":i,"status":"hidden"});
-    deck.push({"symbolID":i,"status":"hidden"});
-    // console.log(i);
-    // console.log(deck);
+    for (let j=0;j<maxFlip;j++){
+      deck.push({"symbolID":i,"status":"hidden"});
+    }
   }
   shuffle(deck);
   return deck;
@@ -48,9 +44,9 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 
 
 // STARTS GAME //
-
+  const maxFlip = 3; //only two cards at a time
   let currentFlippedCards = [];
-  let gameSize = 6;
+  let gameSize = 21;
   let gameDeck = createDeck(gameSize);
 
   let boardList = document.getElementById("board-list");
@@ -79,6 +75,16 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 
 function refresh() {
 
+  if (currentFlippedCards.length >= maxFlip) {  // if the flipped hand reaches the limit...
+    if (isAMatch(currentFlippedCards)){         // see if the hand is a match
+      markCardsSolved(currentFlippedCards);     // if so, solve them
+    }
+    else {
+      markCardsHidden(currentFlippedCards);     //
+    }
+    currentFlippedCards = [];
+  }
+
   for (let i=0;i<gameDeck.length;i++){
 
     let backEndCard = gameDeck[i];
@@ -88,32 +94,15 @@ function refresh() {
     frontEndCard.setAttribute("class",frontEndCard.status);
   }
 
-  if (currentFlippedCards.length >= maxFlip) {  // if the flipped hand reaches the limit...
-    if (isAMatch(currentFlippedCards)){         // see if the hand is a match
-      markCardsSolved(currentFlippedCards);     // if so, solve them
-    }
-    else {
-      markCardsHidden(currentFlippedCards);     //
-    }
-  }
-
 }
 
 function isAMatch (hand){     // hand will be an array that contains the indices of the flipped cards
   let symbolToMatch = gameDeck[hand[0]].symbolID;
-  console.log("hand:",hand);
-  console.log("hand[0]:",hand[0]);
-  console.log("gameDeck[hand[0]]:",gameDeck[hand[0]]);
-  console.log('gameDeck[hand[0]].symbolID:',gameDeck[hand[0]].symbolID);
-  console.log("symbol to match:",symbolToMatch);
-  for (i=0;i<hand.length;i++){
-    console.log("going through loop",i,"here's the card we're looking at");
-    console.log("hand:",hand);
-    console.log("hand[i]:",hand[i]);
-    console.log("gameDeck[hand[i]]:",gameDeck[hand[i]]);
-    console.log('gameDeck[hand[i]].symbolID:',gameDeck[hand[i]].symbolID);
-    console.log("symbol to match:",symbolToMatch);
-    if (gameDeck[hand[0]].symbolID != symbolToMatch) {
+  console.log("Symbol to match:",symbolToMatch);
+  console.log("starting loop");
+  for (i=1;i<hand.length;i++){
+    let thisCardSymbol = gameDeck[hand[0]].symbolID;
+    if (gameDeck[hand[i]].symbolID != symbolToMatch) {
       console.log("not a match!");
       return false;
     }
@@ -122,28 +111,39 @@ function isAMatch (hand){     // hand will be an array that contains the indices
   return true;
 }
 
+function markCardsSolved (hand) {   // hand will be an array that contains the indices of the flipped cards
+  for (let i=0;i<hand.length;i++){
+    gameDeck[hand[i]].status = "solved";
+  }
+}
+
+function markCardsHidden (hand) {   // hand will be an array that contains the indices of the flipped cards
+  for (let i=0;i<hand.length;i++){
+    gameDeck[hand[i]].status = "hidden";
+  }
+}
 
 function clickFunction() {
-  console.log("Before Click");
-  console.log("Current hand:",currentFlippedCards);
-  console.log("Index Property:",this.cardIndex);
-  console.log("Id Attribute:",this.getAttribute("id"));
-  console.log("Status Property",this.status);
-  console.log("Class attribute",this.getAttribute("class"));
-
-  console.log("Click!!",);
-  console.log("After click:",);
+  // console.log("Before Click");
+  // console.log("Current hand:",currentFlippedCards);
+  // console.log("Index Property:",this.cardIndex);
+  // console.log("Id Attribute:",this.getAttribute("id"));
+  // console.log("Status Property",this.status);
+  // console.log("Class attribute",this.getAttribute("class"));
+  //
+  // console.log("Click!!",);
+  // console.log("After click:",);
 
   if (gameDeck[this.cardIndex].status == "hidden"){
     gameDeck[this.cardIndex].status = "flipped";
     currentFlippedCards.push(this.cardIndex);
   }
-  console.log("After click, before refresh:");
-  console.log("Current hand:",currentFlippedCards);
-  console.log("Index Property:",this.cardIndex);
-  console.log("Id Attribute:",this.getAttribute("id"));
-  console.log("Status Property",this.status);
-  console.log("Class attribute",this.getAttribute("class"));
+  // console.log("After click, before refresh:");
+  // console.log("Current hand:",currentFlippedCards);
+  // console.log("Index Property:",this.cardIndex);
+  // console.log("Id Attribute:",this.getAttribute("id"));
+  // console.log("Status Property",this.status);
+  // console.log("Class attribute",this.getAttribute("class"));
 
   refresh();
 
