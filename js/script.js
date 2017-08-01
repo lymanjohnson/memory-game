@@ -52,7 +52,7 @@ function doTheyMatch(deck){
   let currentSet = []; //this will track indices of the flipped cards
 
   for (let i=0;i<deck.length;i++){    //goes through the deck
-    if (deck[i].status == "hidden"){ //if the current card is active but not solved...
+    if (deck[i].status == "flipped"){ //if the current card is active but not solved...
       currentSet.push(i); //it stores the card's index. This should happen as many times as maxFlip.
     }
   }
@@ -122,9 +122,7 @@ function refresh() {
     let backEndCard = gameDeck[i];
     let frontEndCard = document.getElementsByTagName("li")[i];
 
-    frontEndCard.flipped = backEndCard.flipped ? 'yes' : 'no';
-    frontEndCard.solved = backEndCard.solved ? 'yes' : 'no';
-
+    frontEndCard.status = backEndCard.status;
   }
 
 
