@@ -35,8 +35,8 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
   }
   // console.log(numberOfCards);
   for (let i=0;i<(numberOfCards/maxFlip); i++){
-    deck.push({"symbolID":i,"flipped":false,"solved":false});
-    deck.push({"symbolID":i,"flipped":false,"solved":false});
+    deck.push({"symbolID":i,"status":"hidden"});
+    deck.push({"symbolID":i,"status":"hidden"});
     // console.log(i);
     // console.log(deck);
   }
@@ -52,7 +52,7 @@ function doTheyMatch(deck){
   let currentSet = []; //this will track indices of the flipped cards
 
   for (let i=0;i<deck.length;i++){    //goes through the deck
-    if (deck[i].flipped == true && deck[i].solved == false){ //if the current card is active but not solved...
+    if (deck[i].status == "hidden"){ //if the current card is active but not solved...
       currentSet.push(i); //it stores the card's index. This should happen as many times as maxFlip.
     }
   }
@@ -67,10 +67,10 @@ function doTheyMatch(deck){
 
   for (let i=0;i<currentSet.length;i++){
     if (isMatch){     //if they matched, mark them solved
-      deck[currentSet[i]].solved = true;
+      deck[currentSet[i]].status = "solved";
     }
     else {            // otherwise flip them back over
-      deck[currentSet[i]].flipped = false;
+      deck[currentSet[i]].status = "hidden";
     }
   }
 }
@@ -88,8 +88,7 @@ function doTheyMatch(deck){
     let liText = document.createElement("h1");
     let liTextContent = document.createTextNode(gameDeck[i].symbolID);
     li.cardIndex = i;
-    li.flipped = "no";
-    li.solved = "no";
+    li.status = "hidden";
 
     li.addEventListener('click', clickFunction);
 
@@ -103,17 +102,15 @@ function doTheyMatch(deck){
 function clickFunction() {
   console.log("Click!!",);
   console.log(this.cardIndex);
-  console.log("Was solved?",this.solved)
-  console.log("Was flipped?",this.flipped)
-  if (gameDeck[this.cardIndex].flipped == false){
-    gameDeck[this.cardIndex].flipped = true;
+  console.log("Was solved?",this.status)
+  if (gameDeck[this.cardIndex].status == "hidden"){
+    gameDeck[this.cardIndex].status = "flipped";
     currentFlippedCards += 1;
   }
 
   refresh();
   console.log(this);
-  console.log("Is solved?",this.solved)
-  console.log("Is flipped?",this.flipped)
+  console.log("Is solved?",this.status)
 
 }
 
