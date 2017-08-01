@@ -20,8 +20,16 @@ function shuffle(array) {
   return array;
 }
 
+function threeDigitNumber(num){
+  return ("00" + num).slice (-3);
+}
+
+
+
 let gameIsRunning = true;
 let youWin = false;
+
+
 
 function createDeck(numberOfCards) {      // creates a randomized card deck
   let deck = []
@@ -41,10 +49,8 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 
 //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
 
-
-
 // STARTS GAME //
-  const maxFlip = 3; //only two cards at a time
+  const maxFlip = 3; //how many cards you need to match
   let currentFlippedCards = [];
   let gameSize = 21;
   let gameDeck = createDeck(gameSize);
