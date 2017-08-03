@@ -206,6 +206,9 @@ function spinForAgin(card){
   let degrees = 180;
   let id = setInterval(frame,10);
   function frame() {
+    if (degrees == 90){
+      card.setAttribute("src","img/logo.png");
+    }
     if (degrees <= 0){
       clearInterval(id);
       return;
@@ -216,6 +219,25 @@ function spinForAgin(card){
     }
   }
 }
+
+function spinToSee(card){
+  let degrees = 0;
+  let id = setInterval(frame,10);
+  function frame() {
+    if (degrees == 90){
+      card.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
+    }
+    if (degrees >= 180){
+      clearInterval(id);
+      return;
+    }
+    else{
+      degrees++;
+      card.style.transform = "rotateY("+degrees+"deg)"
+    }
+  }
+}
+
 
 // function refresh() {
 //
