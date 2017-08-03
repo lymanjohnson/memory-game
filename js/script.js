@@ -68,8 +68,8 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 
 // STARTS GAME //
 
-let gameSize = 30; //cards in the game
-let maxFlip = 3; //how many cards you need to match
+let gameSize = 10; //cards in the game
+let maxFlip = 2; //how many cards you need to match
 let turnDelay = 2 //how long before mis-matched cards hide again (in seconds)
 let lives = 6; //number of mistakes you can make
 
@@ -226,19 +226,19 @@ function spinCuzYouWin(card){
 
 //function to spin a card into hidden state
 function spinForAgin(card){
-  let degrees = 180;
+  let degrees = 0;
   let id = setInterval(frame,flipSpeed);
   function frame() {
     if (degrees == 90){
       card.firstChild.setAttribute("src","img/logo.png");
     }
-    if (degrees <= 0){
+    if (degrees >= 180){
       clearInterval(id);
       card.setAttribute("class","hidden");
       card.status = "hidden";
     }
     else{
-      degrees--;
+      degrees++;
       card.style.transform = "rotateY("+degrees+"deg)";
     }
   }
@@ -246,19 +246,19 @@ function spinForAgin(card){
 
 //function to spin a card into revealed state
 function spinToSee(card){
-  let degrees = 0;
+  let degrees = 180;
   let id = setInterval(frame,flipSpeed);
   function frame() {
     if (degrees == 90){
       card.firstChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[card.cardIndex].symbolID])+".ico");
     }
-    if (degrees >= 180){
+    if (degrees <= 0){
       clearInterval(id);
       card.setAttribute("class","flipped");
       card.status = "flipped";
     }
     else{
-      degrees++;
+      degrees--;
       card.style.transform = "rotateY("+degrees+"deg)";
     }
   }

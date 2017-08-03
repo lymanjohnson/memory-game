@@ -6,10 +6,6 @@ Invisible Cards:
     symbolID
 
 
-
-
-
-
 Visible Cards:
 
   li elements in <ul>
