@@ -80,6 +80,8 @@ let flipSpeed = 2;
 
 let waitForPlayer = false; // this stops player from clicking when they shouldn't
 
+
+
 buildBoard(gameSize,maxFlip,turnDelay,lives);
 
 function buildBoard(gameSize,maxFlip,turnDelay,lives){  //make it instantiate based on parameters
@@ -300,108 +302,59 @@ function markCardsHidden (hand) {   // hand will be an array that contains the i
   }
   currentFlippedCards = [];
 }
-//
-// function clickFunction() {   /// old version
-//   // //console.log("Before Click");
-//   // //console.log("Current hand:",currentFlippedCards);
-//   // //console.log("Index Property:",this.cardIndex);
-  // //console.log("Id Attribute:",this.getAttribute("id"));
-  // //console.log("Status Property",this.status);
-  // //console.log("Class attribute",this.getAttribute("class"));
-  //
-  // //console.log("Click!!",);
-  // //console.log("After click:",);
-  //
-  // if (gameDeck[this.cardIndex].status == "hidden"){
-  //   gameDeck[this.cardIndex].status = "flipped";
-  //   currentFlippedCards.push(this.cardIndex);
-  // }
-  // //console.log("After click, before refresh:");
-  // //console.log("Current hand:",currentFlippedCards);
-  // //console.log("Index Property:",this.cardIndex);
-  // //console.log("Id Attribute:",this.getAttribute("id"));
-  // //console.log("Status Property",this.status);
-  // //console.log("Class attribute",this.getAttribute("class"));
-
-  // refresh();
-  //
-  // //console.log("After refresh");
-  // //console.log("Current hand:",currentFlippedCards);
-  // //console.log("Index Property:",this.cardIndex);
-  // //console.log("Id Attribute:",this.getAttribute("id"));
-  // //console.log("Status Property",this.status);
-  // //console.log("Class attribute",this.getAttribute("class"));
-
-// }
 
 
+// Open Screen //
 
+function fillForm(data) {
 
-// function doTheyMatch(){
-//
-//   let isMatch = true; //assume for the time being it's a match
-//   let currentSet = []; //this will track indices of the flipped cards
-//
-//   for (let i=0;i<gameDeck.length;i++){    //goes through the deck
-//     if (gameDeck[i].status == "flipped"){ //if the current card is active but not solved...
-//       currentSet.push(i); //it stores the card's index. This should happen as many times as maxFlip.
-//     }
-//   }
-//
-//   let symbolToMatch = gameDeck[currentSet[0]].symbolID; // stores the first selected card's symbol
-//
-//   for (let i=1;i<currentSet.length;i++){  //goes through the flipped cards
-//     if (gameDeck[currentSet[i]].symbolID != symbolToMatch) {// if the current card doesn't match the first flipped card...
-//     isMatch = false; //then there's no match
-//     }
-//   }
-//
-//   for (let i=0;i<currentSet.length;i++){
-//     if (isMatch){     //if they matched, mark them solved
-//       gameDeck[currentSet[i]].status = "solved";
-//     }
-//     else {            // otherwise flip them back over
-//       gameDeck[currentSet[i]].status = "hidden";
-//     }
-//   }
-// }
+  let wrapper = document.getElementById('board');
 
+  console.log("Created wrapper:",wrapper);
 
+  for (i=0;i<data.length;i++){
 
-// function refresh() {
-//
-//   for (let i=0;i<gameDeck.length;i++){
-//
-//     let backEndCard = gameDeck[i];
-//     let frontEndCard = document.getElementsByTagName("li")[i];
-//
-//     frontEndCard.status = backEndCard.status;
-//     frontEndCard.setAttribute("class",frontEndCard.status);
-//
-//     if (frontEndCard.status == "solved") {
-//       frontEndCard.lastChild.setAttribute("src","img/493 Arceus Water.ico");
-//       // //console.log("solved card here");
-//       // //console.log(frontEndCard);
-//     }
-//
-//     if (frontEndCard.status == "hidden") {
-//       frontEndCard.lastChild.setAttribute("src","img/logo.png");
-//     }
-//
-//     if (frontEndCard.status == "flipped") {
-//       frontEndCard.lastChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
-//     }
-//
-//     if (currentFlippedCards.length >= maxFlip) {  // if the flipped hand reaches the limit...
-//       if (isAMatch(currentFlippedCards)){         // see if the hand is a match
-//         markCardsSolved(currentFlippedCards);     // if so, solve them
-//       }
-//       else {
-//         markCardsHidden(currentFlippedCards);     //
-//       }
-//       currentFlippedCards = [];
-//     }
-//
-//   }
-//
-// }
+    let newInput = document.createElement("input");
+
+    console.log("Main Loop:",i);
+    console.log(data[i].type);
+    if (data[i].type == "select") {
+      console.log("was select, hit the first if");
+      newInput = document.createElement("select");
+    }
+    else if (data[i].type == "textarea") {
+      newInput = document.createElement("textarea");
+      console.log("it was text area, hit the second if");
+    }
+
+    newInput.setAttribute("type",data[i].type);
+    newInput.setAttribute("id",data[i].id);
+    newInput.setAttribute("placeholder",data[i].label);
+    newInput.setAttribute("icon",data[i].icon);
+    console.log(data[i].icon);
+
+    console.log(newInput);
+
+    if (data[i].type == "select") {
+      console.log("The input type was 'select'")
+      newInput.setAttribute("type","select");
+
+      for (j=0;j<data[i].options.length;j++){
+        console.log("sub-loop:",j);
+        let newOption = document.createElement("option");
+        newOption.setAttribute("value",data[i].options[j].value);
+        newOption.setAttribute("label",data[i].options[j].label);
+        newInput.appendChild(newOption);
+        console.log(newOption);
+        console.log(newInput);
+      }
+    console.log(newInput);
+
+    }
+    wrapper.appendChild(newInput);
+    console.log(wrapper);
+  }
+
+}
+
+fillForm(formData);
