@@ -70,6 +70,7 @@ let lives = 6; //number of mistakes you can make
 let currentFlippedCards = [];
 let gameDeck = createDeck(gameSize);  //instantiate deck
 let boardList = document.getElementById("board-list");
+let flipSpeed = 2;
 
 let waitForPlayer = false; // this stops player from clicking when they shouldn't
 
@@ -136,6 +137,7 @@ function refresh(){
 
 //if the player hasn't flipped a full hand, go back to waiting
   if (currentFlippedCards.length < maxFlip){
+    waitXSeconds(.5);
     waitForPlayer = true;
     return;
   }
@@ -152,7 +154,7 @@ function refresh(){
   }
 
   //Wait a few seconds before updating the deck
-  waitXSeconds(timeDelay);
+  waitXSeconds(turnDelay);
 
   //update the board
   flipEm();
@@ -171,23 +173,23 @@ function flipEm() {
     let backEndCard = gameDeck[i];
     let frontEndCard = document.getElementsByTagName("li")[i];
 
+    console.log(i);
+    console.log(backEndCard);
+    console.log(frontEndCard);
+
     // if they don't match, see what kind of spin they should do
     if (frontEndCard.status != backEndCard.status){
-      console.log(frontEndCard.cardIndex);
-      console.log(frontEndCard.status);
-      console.log(backEndCard.status);
 
       if (backEndCard.status == "hidden"){
-
+        console.log("should be hidden")
         spinForAgin(frontEndCard);
       }
       else if (backEndCard.status == "solved") {
-
-
+        console.log("should be solved")
         spinCuzYouWin(frontEndCard);
       }
       else if (backEndCard.status == "flipped"){
-
+        console.log("should be flipped")
         spinToSee(frontEndCard);
       }
     }
@@ -196,11 +198,11 @@ function flipEm() {
 
 function spinCuzYouWin(card){
     let degrees = 0;
-    let id = setInterval(frame,10);
+    let id = setInterval(frame,flipSpeed);
     function frame() {
       if (degrees >= 90){
         clearInterval(id);
-        card.setAttribute("status","solved");
+        card.setAttribute("class","solved");
         card.status = "solved";
         // return;
       }
@@ -214,14 +216,14 @@ function spinCuzYouWin(card){
 
 function spinForAgin(card){
   let degrees = 180;
-  let id = setInterval(frame,10);
+  let id = setInterval(frame,flipSpeed);
   function frame() {
     if (degrees == 90){
       card.firstChild.setAttribute("src","img/logo.png");
     }
     if (degrees <= 0){
       clearInterval(id);
-      card.setAttribute("status","hidden");
+      card.setAttribute("class","hidden");
       card.status = "hidden";
     }
     else{
@@ -234,14 +236,14 @@ function spinForAgin(card){
 function spinToSee(card){
   console.log(card);
   let degrees = 0;
-  let id = setInterval(frame,10);
+  let id = setInterval(frame,flipSpeed);
   function frame() {
     if (degrees == 90){
-      card.firstChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[card.cardIndex])+".ico");
+      card.firstChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[card.cardIndex].symbolID])+".ico");
     }
     if (degrees >= 180){
       clearInterval(id);
-      card.setAttribute("status","flipped");
+      card.setAttribute("class","flipped");
       card.status = "flipped";
     }
     else{
