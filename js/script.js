@@ -143,7 +143,7 @@ function isGameOver(){
 }
 
 function deductHealth(){
-  lives -= 1;
+  lives -= 1/maxFlip;
 }
 
 function playerWins(){
@@ -182,11 +182,12 @@ function refresh(){
   setTimeout(function(){
     flipEm();
     setTimeout(function(){
+      isGameOver();
       waitForPlayer = true;
     },800);
   },turnDelay*1000);
 
-  isGameOver();
+
 
 }
 
@@ -243,6 +244,7 @@ function spinCuzYouWin(card){
 
 //function to spin a card into hidden state
 function spinForAgin(card){
+  deductHealth();
   let degrees = 0;
   let id = setInterval(frame,flipSpeed);
   function frame() {
