@@ -21,8 +21,12 @@ function shuffle(array) {
 }
 
 function waitXSeconds(x){
-  setTimeout(function(){return true;},x*1000);
-  // console.log("this was written second but prints first");
+  run = true;
+  setTimeout(function(){run = false;},x*1000);
+  while(run=false){
+    return;
+  }
+  // //console.log("this was written second but prints first");
 }
 
 //https://stackoverflow.com/questions/2998784/how-to-output-integers-with-leading-zeros-in-javascript
@@ -46,11 +50,11 @@ pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
 
 function createDeck(numberOfCards) {      // creates a randomized card deck
   let deck = []
-  // console.log(deck);
+  // //console.log(deck);
   while(numberOfCards%maxFlip != 0){  //Number of cards must be a multiple of the amount you need to match in a hand
     numberOfCards += 1; //keeps adding cards until there's the right amount
   }
-  // console.log(numberOfCards);
+  // //console.log(numberOfCards);
   for (let i=0;i<(numberOfCards/maxFlip); i++){
     for (let j=0;j<maxFlip;j++){
       deck.push({"symbolID":i,"status":"hidden"});
@@ -110,8 +114,8 @@ function buildBoard(gameSize,maxFlip,turnDelay,lives){  //make it instantiate ba
 function clickFunction(){
 // If the player clicks at an appropriate time it will flip a hidden card.
 // It will then flip pending cards, put a hold on further moves, and invoke the
-//   expansive "refresh" function
-  console.log("click",currentFlippedCards);
+// expansive "refresh" function
+  //console.log("click",currentFlippedCards);
   if (waitForPlayer == true && gameDeck[this.cardIndex].status == "hidden"){
     gameDeck[this.cardIndex].status = "flipped";
     currentFlippedCards.push(this.cardIndex);
@@ -119,7 +123,7 @@ function clickFunction(){
     flipEm();
     refresh();
   }
-  console.log("clicked",currentFlippedCards);
+  //console.log("clicked",currentFlippedCards);
 }
 
 function deductHealth(){
@@ -140,14 +144,15 @@ function refresh(){
 
 //if the player hasn't flipped a full hand, go back to waiting
   if (currentFlippedCards.length < maxFlip){
-    // waitXSeconds(.5);
-    // waitForPlayer = true;
+    // setTimeout( function() {
+      waitForPlayer = true;
+    // },turnDelay*1000);
     return;
   }
 
 //Otherwise, it will evaluate whether or not it was a match, then wait a few seconds before the next step...
   else{
-    console.log("refresh, first else, currentFlippedCards=",currentFlippedCards);
+    //console.log("refresh, first else, currentFlippedCards=",currentFlippedCards);
     if (isAMatch(currentFlippedCards)){
       markCardsSolved(currentFlippedCards);
     }
@@ -159,17 +164,17 @@ function refresh(){
   }
 
   //Wait a few seconds before updating the deck
-  console.log("About to wait #1");
+  //console.log("About to wait #1");
   setTimeout(function(){
-    console.log("done waiting #1")
+    //console.log("done waiting #1")
     flipEm();
-    console.log("ran flip'em");
-    console.log("About to wait #2");
+    //console.log("ran flip'em");
+    //console.log("About to wait #2");
     setTimeout(function(){
-      console.log("done waiting #2")
-      waitForPlayer = true;
-      console.log("waitForPlayer:",waitForPlayer);
-    },1000);
+      //console.log("done waiting #2")
+      // waitForPlayer = true;
+      //console.log("waitForPlayer:",waitForPlayer);
+    },2000);
   },turnDelay*1000);
 
 
@@ -184,24 +189,24 @@ function flipEm() {
     let backEndCard = gameDeck[i];
     let frontEndCard = document.getElementsByTagName("li")[i];
 
-    console.log(i);
-    console.log(backEndCard);
-    console.log(frontEndCard);
-    console.log(frontEndCard.status);
+    //console.log(i);
+    //console.log(backEndCard);
+    //console.log(frontEndCard);
+    //console.log(frontEndCard.status);
 
     // if they don't match, see what kind of spin they should do
     if (frontEndCard.status != backEndCard.status){
 
       if (backEndCard.status == "hidden"){  // && currentFlippedCards.length>=maxFlip
-        console.log("should be hidden")
+        //console.log("should be hidden")
         spinForAgin(frontEndCard);
       }
       else if (backEndCard.status == "solved" ) { //&& currentFlippedCards.length>=maxFlip
-        console.log("should be solved")
+        //console.log("should be solved")
         spinCuzYouWin(frontEndCard);
       }
       else if (backEndCard.status == "flipped"){
-        console.log("should be flipped")
+        //console.log("should be flipped")
         spinToSee(frontEndCard);
       }
     }
@@ -219,7 +224,7 @@ function spinCuzYouWin(card){
         clearInterval(id);
         card.setAttribute("class","solved");
         card.status = "solved";
-        waitForPlayer = true;
+        // waitForPlayer = true;
       }
       else{
         degrees++;
@@ -242,7 +247,7 @@ function spinForAgin(card){
       clearInterval(id);
       card.setAttribute("class","hidden");
       card.status = "hidden";
-      waitForPlayer = true;
+      // waitForPlayer = true;
     }
     else{
       degrees--;
@@ -254,7 +259,7 @@ function spinForAgin(card){
 //function to spin a card into revealed state
 function spinToSee(card){
   waitForPlayer = false;
-  console.log(card);
+  //console.log(card);
   let degrees = 0;
   let id = setInterval(frame,flipSpeed);
   function frame() {
@@ -265,7 +270,7 @@ function spinToSee(card){
       clearInterval(id);
       card.setAttribute("class","flipped");
       card.status = "flipped";
-      waitForPlayer = true;
+      // waitForPlayer = true;
     }
     else{
       degrees++;
@@ -276,25 +281,25 @@ function spinToSee(card){
 
 function isAMatch (hand){     // hand will be an array that contains the indices of the flipped cards
   let symbolToMatch = gameDeck[hand[0]].symbolID;
-    console.log("Symbol to match:",symbolToMatch);
-    console.log("starting loop");
+    //console.log("Symbol to match:",symbolToMatch);
+    //console.log("starting loop");
   for (i=1;i<hand.length;i++){
     let thisCardSymbol = gameDeck[hand[0]].symbolID;
     if (gameDeck[hand[i]].symbolID != symbolToMatch) {
-      console.log("not a match!");
+      //console.log("not a match!");
       return false;
     }
   }
-  console.log("its a match!");
+  //console.log("its a match!");
   return true;
 }
 
 
 function markCardsSolved (hand) { // hand will be an array that contains the indices of the flipped cards
   for (let i=0;i<hand.length;i++){
-    console.log("marking solved:");
-    console.log("\thand[i]",hand[i]);
-    console.log("\tgameDeck[hand[i]]",gameDeck[hand[i]]);
+    //console.log("marking solved:");
+    //console.log("\thand[i]",hand[i]);
+    //console.log("\tgameDeck[hand[i]]",gameDeck[hand[i]]);
     gameDeck[hand[i]].status = "solved";
   }
   currentFlippedCards = [];
@@ -303,44 +308,44 @@ function markCardsSolved (hand) { // hand will be an array that contains the ind
 
 function markCardsHidden (hand) {   // hand will be an array that contains the indices of the flipped cards
   for (let i=0;i<hand.length;i++){
-    console.log("marking wrong (to be hidden):");
-    console.log("\thand[i]",hand[i]);
-    console.log("\tgameDeck[hand[i]]",gameDeck[hand[i]]);
+    //console.log("marking wrong (to be hidden):");
+    //console.log("\thand[i]",hand[i]);
+    //console.log("\tgameDeck[hand[i]]",gameDeck[hand[i]]);
     gameDeck[hand[i]].status = "hidden";
   }
   currentFlippedCards = [];
 }
 //
 // function clickFunction() {   /// old version
-//   // console.log("Before Click");
-//   // console.log("Current hand:",currentFlippedCards);
-//   // console.log("Index Property:",this.cardIndex);
-  // console.log("Id Attribute:",this.getAttribute("id"));
-  // console.log("Status Property",this.status);
-  // console.log("Class attribute",this.getAttribute("class"));
+//   // //console.log("Before Click");
+//   // //console.log("Current hand:",currentFlippedCards);
+//   // //console.log("Index Property:",this.cardIndex);
+  // //console.log("Id Attribute:",this.getAttribute("id"));
+  // //console.log("Status Property",this.status);
+  // //console.log("Class attribute",this.getAttribute("class"));
   //
-  // console.log("Click!!",);
-  // console.log("After click:",);
+  // //console.log("Click!!",);
+  // //console.log("After click:",);
   //
   // if (gameDeck[this.cardIndex].status == "hidden"){
   //   gameDeck[this.cardIndex].status = "flipped";
   //   currentFlippedCards.push(this.cardIndex);
   // }
-  // console.log("After click, before refresh:");
-  // console.log("Current hand:",currentFlippedCards);
-  // console.log("Index Property:",this.cardIndex);
-  // console.log("Id Attribute:",this.getAttribute("id"));
-  // console.log("Status Property",this.status);
-  // console.log("Class attribute",this.getAttribute("class"));
+  // //console.log("After click, before refresh:");
+  // //console.log("Current hand:",currentFlippedCards);
+  // //console.log("Index Property:",this.cardIndex);
+  // //console.log("Id Attribute:",this.getAttribute("id"));
+  // //console.log("Status Property",this.status);
+  // //console.log("Class attribute",this.getAttribute("class"));
 
   // refresh();
   //
-  // console.log("After refresh");
-  // console.log("Current hand:",currentFlippedCards);
-  // console.log("Index Property:",this.cardIndex);
-  // console.log("Id Attribute:",this.getAttribute("id"));
-  // console.log("Status Property",this.status);
-  // console.log("Class attribute",this.getAttribute("class"));
+  // //console.log("After refresh");
+  // //console.log("Current hand:",currentFlippedCards);
+  // //console.log("Index Property:",this.cardIndex);
+  // //console.log("Id Attribute:",this.getAttribute("id"));
+  // //console.log("Status Property",this.status);
+  // //console.log("Class attribute",this.getAttribute("class"));
 
 // }
 
@@ -390,8 +395,8 @@ function markCardsHidden (hand) {   // hand will be an array that contains the i
 //
 //     if (frontEndCard.status == "solved") {
 //       frontEndCard.lastChild.setAttribute("src","img/493 Arceus Water.ico");
-//       // console.log("solved card here");
-//       // console.log(frontEndCard);
+//       // //console.log("solved card here");
+//       // //console.log(frontEndCard);
 //     }
 //
 //     if (frontEndCard.status == "hidden") {
