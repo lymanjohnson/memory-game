@@ -22,6 +22,7 @@ function shuffle(array) {
 
 function waitXSeconds(x){
   setTimeout(function(){return true;},x*1000);
+  // console.log("this was written second but prints first");
 }
 
 //https://stackoverflow.com/questions/2998784/how-to-output-integers-with-leading-zeros-in-javascript
@@ -110,6 +111,7 @@ function clickFunction(){
 // If the player clicks at an appropriate time it will flip a hidden card.
 // It will then flip pending cards, put a hold on further moves, and invoke the
 //   expansive "refresh" function
+  console.log("click",currentFlippedCards);
   if (waitForPlayer == true && gameDeck[this.cardIndex].status == "hidden"){
     gameDeck[this.cardIndex].status = "flipped";
     currentFlippedCards.push(this.cardIndex);
@@ -117,6 +119,7 @@ function clickFunction(){
     flipEm();
     refresh();
   }
+  console.log("clicked",currentFlippedCards);
 }
 
 function deductHealth(){
@@ -144,9 +147,11 @@ function refresh(){
 
 //Otherwise, it will evaluate whether or not it was a match, then wait a few seconds before the next step...
   else{
+    console.log("refresh, first else, currentFlippedCards=",currentFlippedCards);
     if (isAMatch(currentFlippedCards)){
       markCardsSolved(currentFlippedCards);
     }
+
     else {
       markCardsHidden(currentFlippedCards);
     }
@@ -154,20 +159,26 @@ function refresh(){
   }
 
   //Wait a few seconds before updating the deck
-  waitXSeconds(turnDelay);
+  console.log("About to wait #1");
+  setTimeout(function(){
+    console.log("done waiting #1")
+    flipEm();
+    console.log("ran flip'em");
+    console.log("About to wait #2");
+    setTimeout(function(){
+      console.log("done waiting #2")
+      waitForPlayer = true;
+      console.log("waitForPlayer:",waitForPlayer);
+    },1000);
+  },turnDelay*1000);
 
-  //update the board
-  flipEm();
 
-  //wait another half second before handing control off to the player
-  waitXSeconds(.5);
-  waitForPlayer = true;
+
 }
 
 function flipEm() {
   //goes through and any board cards that don't match the gameDeck get flipped,
   //thus matching the virtual and visual decks
-
   //cycles through the decks...
   for (let i=0;i<gameDeck.length;i++){
     let backEndCard = gameDeck[i];
@@ -181,11 +192,11 @@ function flipEm() {
     // if they don't match, see what kind of spin they should do
     if (frontEndCard.status != backEndCard.status){
 
-      if (backEndCard.status == "hidden"){
+      if (backEndCard.status == "hidden"){  // && currentFlippedCards.length>=maxFlip
         console.log("should be hidden")
         spinForAgin(frontEndCard);
       }
-      else if (backEndCard.status == "solved") {
+      else if (backEndCard.status == "solved" ) { //&& currentFlippedCards.length>=maxFlip
         console.log("should be solved")
         spinCuzYouWin(frontEndCard);
       }
@@ -197,6 +208,8 @@ function flipEm() {
   }
 }
 
+
+//function to spin a card into solved state
 function spinCuzYouWin(card){
     waitForPlayer = false;
     let degrees = 0;
@@ -216,6 +229,7 @@ function spinCuzYouWin(card){
   }
 }
 
+//function to spin a card into hidden state
 function spinForAgin(card){
   waitForPlayer = false;
   let degrees = 180;
@@ -237,6 +251,7 @@ function spinForAgin(card){
   }
 }
 
+//function to spin a card into revealed state
 function spinToSee(card){
   waitForPlayer = false;
   console.log(card);
@@ -274,14 +289,17 @@ function isAMatch (hand){     // hand will be an array that contains the indices
   return true;
 }
 
-function markCardsSolved (hand) {   // hand will be an array that contains the indices of the flipped cards
+
+function markCardsSolved (hand) { // hand will be an array that contains the indices of the flipped cards
   for (let i=0;i<hand.length;i++){
     console.log("marking solved:");
     console.log("\thand[i]",hand[i]);
     console.log("\tgameDeck[hand[i]]",gameDeck[hand[i]]);
     gameDeck[hand[i]].status = "solved";
   }
+  currentFlippedCards = [];
 }
+
 
 function markCardsHidden (hand) {   // hand will be an array that contains the indices of the flipped cards
   for (let i=0;i<hand.length;i++){
@@ -290,6 +308,7 @@ function markCardsHidden (hand) {   // hand will be an array that contains the i
     console.log("\tgameDeck[hand[i]]",gameDeck[hand[i]]);
     gameDeck[hand[i]].status = "hidden";
   }
+  currentFlippedCards = [];
 }
 //
 // function clickFunction() {   /// old version
