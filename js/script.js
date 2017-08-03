@@ -58,12 +58,18 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
 
 // STARTS GAME //
-  const maxFlip = 3; //how many cards you need to match
-  let currentFlippedCards = [];
-  let gameSize = 21;
-  let gameDeck = createDeck(gameSize);
+  let gameSize = 6; //cards in the game
+  let maxFlip = 2; //how many cards you need to match
+  let turnDelay = 2 //how long before mis-matched cards hide again
+  let lives = 6; //number of mistakes you can make
 
+  let currentFlippedCards = [];
+  let gameDeck = createDeck(gameSize);  //instantiate deck
   let boardList = document.getElementById("board-list");
+
+buildBoard(gameSize,maxFlip,turnDelay,lives);
+
+function buildBoard(gameSize,maxFlip,turnDelay,lives){  //make it instantiate based on parameters
 
   for (let i=0;i<gameDeck.length;i++){
     let li = document.createElement("li");
@@ -88,7 +94,7 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
     li.appendChild(liImage);
     boardList.appendChild(li);
   }
-
+}
 
 function refresh() {
 
@@ -107,7 +113,7 @@ function refresh() {
     }
 
     if (frontEndCard.status == "hidden") {
-      frontEndCard.lastChild.setAttribute("src","img/logo.jpg");
+      frontEndCard.lastChild.setAttribute("src","img/logo.png");
     }
 
     if (frontEndCard.status == "flipped") {
