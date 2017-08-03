@@ -176,6 +176,7 @@ function flipEm() {
     console.log(i);
     console.log(backEndCard);
     console.log(frontEndCard);
+    console.log(frontEndCard.status);
 
     // if they don't match, see what kind of spin they should do
     if (frontEndCard.status != backEndCard.status){
@@ -209,7 +210,7 @@ function spinCuzYouWin(card){
       }
       else{
         degrees++;
-        card.style.transform = "rotateY("+degrees+"deg)";
+        // card.style.transform = "rotateY("+degrees+"deg)";
         card.style.transform = "rotateX("+degrees+"deg)";
     }
   }
@@ -257,47 +258,6 @@ function spinToSee(card){
     }
   }
 }
-
-
-// function refresh() {
-//
-//   for (let i=0;i<gameDeck.length;i++){
-//
-//     let backEndCard = gameDeck[i];
-//     let frontEndCard = document.getElementsByTagName("li")[i];
-//
-//     frontEndCard.status = backEndCard.status;
-//     frontEndCard.setAttribute("class",frontEndCard.status);
-//
-//     if (frontEndCard.status == "solved") {
-//       frontEndCard.lastChild.setAttribute("src","img/493 Arceus Water.ico");
-//       // console.log("solved card here");
-//       // console.log(frontEndCard);
-//     }
-//
-//     if (frontEndCard.status == "hidden") {
-//       frontEndCard.lastChild.setAttribute("src","img/logo.png");
-//     }
-//
-//     if (frontEndCard.status == "flipped") {
-//       frontEndCard.lastChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
-//     }
-//
-//     if (currentFlippedCards.length >= maxFlip) {  // if the flipped hand reaches the limit...
-//       if (isAMatch(currentFlippedCards)){         // see if the hand is a match
-//         markCardsSolved(currentFlippedCards);     // if so, solve them
-//       }
-//       else {
-//         markCardsHidden(currentFlippedCards);     //
-//       }
-//       currentFlippedCards = [];
-//     }
-//
-//   }
-//
-// }
-
-
 
 function isAMatch (hand){     // hand will be an array that contains the indices of the flipped cards
   let symbolToMatch = gameDeck[hand[0]].symbolID;
@@ -389,4 +349,44 @@ function markCardsHidden (hand) {   // hand will be an array that contains the i
 //       gameDeck[currentSet[i]].status = "hidden";
 //     }
 //   }
+// }
+
+
+
+// function refresh() {
+//
+//   for (let i=0;i<gameDeck.length;i++){
+//
+//     let backEndCard = gameDeck[i];
+//     let frontEndCard = document.getElementsByTagName("li")[i];
+//
+//     frontEndCard.status = backEndCard.status;
+//     frontEndCard.setAttribute("class",frontEndCard.status);
+//
+//     if (frontEndCard.status == "solved") {
+//       frontEndCard.lastChild.setAttribute("src","img/493 Arceus Water.ico");
+//       // console.log("solved card here");
+//       // console.log(frontEndCard);
+//     }
+//
+//     if (frontEndCard.status == "hidden") {
+//       frontEndCard.lastChild.setAttribute("src","img/logo.png");
+//     }
+//
+//     if (frontEndCard.status == "flipped") {
+//       frontEndCard.lastChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
+//     }
+//
+//     if (currentFlippedCards.length >= maxFlip) {  // if the flipped hand reaches the limit...
+//       if (isAMatch(currentFlippedCards)){         // see if the hand is a match
+//         markCardsSolved(currentFlippedCards);     // if so, solve them
+//       }
+//       else {
+//         markCardsHidden(currentFlippedCards);     //
+//       }
+//       currentFlippedCards = [];
+//     }
+//
+//   }
+//
 // }
