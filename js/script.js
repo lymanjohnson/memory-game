@@ -83,7 +83,8 @@ function buildBoard(gameSize,maxFlip,turnDelay,lives){  //make it instantiate ba
     // let liTextContent = document.createTextNode(gameDeck[i].symbolID);
     let liImage = document.createElement("img");
 
-    liImage.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
+    // liImage.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
+    liImage.setAttribute("src","img/logo.png");
     li.setAttribute("class","hidden");
     li.setAttribute("id",("card-"+i));
 
@@ -129,7 +130,7 @@ function playerLoses(){
 
 }
 
-function refresh(
+function refresh(){
 //Deals with the player's last move, performing animations and preparing the
 //board for the player's next move
 
@@ -172,14 +173,21 @@ function flipEm() {
 
     // if they don't match, see what kind of spin they should do
     if (frontEndCard.status != backEndCard.status){
+      console.log(frontEndCard.cardIndex);
+      console.log(frontEndCard.status);
+      console.log(backEndCard.status);
 
       if (backEndCard.status == "hidden"){
+
         spinForAgin(frontEndCard);
       }
       else if (backEndCard.status == "solved") {
+
+
         spinCuzYouWin(frontEndCard);
       }
       else if (backEndCard.status == "flipped"){
+
         spinToSee(frontEndCard);
       }
     }
@@ -192,12 +200,14 @@ function spinCuzYouWin(card){
     function frame() {
       if (degrees >= 90){
         clearInterval(id);
-        return;
+        card.setAttribute("status","solved");
+        card.status = "solved";
+        // return;
       }
       else{
         degrees++;
-        card.style.transform = "rotateY("+degrees+"deg)"
-        card.style.transform = "rotateX("+degrees+"deg)"
+        card.style.transform = "rotateY("+degrees+"deg)";
+        card.style.transform = "rotateX("+degrees+"deg)";
     }
   }
 }
@@ -207,33 +217,36 @@ function spinForAgin(card){
   let id = setInterval(frame,10);
   function frame() {
     if (degrees == 90){
-      card.setAttribute("src","img/logo.png");
+      card.firstChild.setAttribute("src","img/logo.png");
     }
     if (degrees <= 0){
       clearInterval(id);
-      return;
+      card.setAttribute("status","hidden");
+      card.status = "hidden";
     }
     else{
       degrees--;
-      card.style.transform = "rotateY("+degrees+"deg)"
+      card.style.transform = "rotateY("+degrees+"deg)";
     }
   }
 }
 
 function spinToSee(card){
+  console.log(card);
   let degrees = 0;
   let id = setInterval(frame,10);
   function frame() {
     if (degrees == 90){
-      card.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
+      card.firstChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[card.cardIndex])+".ico");
     }
     if (degrees >= 180){
       clearInterval(id);
-      return;
+      card.setAttribute("status","flipped");
+      card.status = "flipped";
     }
     else{
       degrees++;
-      card.style.transform = "rotateY("+degrees+"deg)"
+      card.style.transform = "rotateY("+degrees+"deg)";
     }
   }
 }
@@ -337,7 +350,7 @@ function markCardsHidden (hand) {   // hand will be an array that contains the i
   // console.log("Status Property",this.status);
   // console.log("Class attribute",this.getAttribute("class"));
 
-}
+// }
 
 
 
