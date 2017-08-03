@@ -67,9 +67,9 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
 
 // STARTS GAME //
-let gameSize = 6; //cards in the game
-let maxFlip = 2; //how many cards you need to match
-let turnDelay = 1 //how long before mis-matched cards hide again (in seconds)
+let gameSize = 30; //cards in the game
+let maxFlip = 3; //how many cards you need to match
+let turnDelay = 2 //how long before mis-matched cards hide again (in seconds)
 let lives = 6; //number of mistakes you can make
 
 let currentFlippedCards = [];
