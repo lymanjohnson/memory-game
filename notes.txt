@@ -1,0 +1,25 @@
+Invisible Cards:
+
+  Objects in gameDeck
+  Properties:
+    status
+    symbolID
+
+
+
+
+
+
+Visible Cards:
+
+  li elements in <ul>
+  image stored as <img> underneath li
+  listener attached to li
+
+  Properties:
+    cardIndex = #;                          static, shouldn't cause problems
+    status = "hidden"/"flipped"/"solved"    make sure it always == class
+
+  Attributes:
+    class: "hidden"/"flipped"/"solved"      make sure it always == status
+    id: <card-#>                            static, shouldn't cause problems

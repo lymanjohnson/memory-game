@@ -85,6 +85,7 @@ function buildBoard(gameSize,maxFlip,turnDelay,lives){  //make it instantiate ba
     let liImage = document.createElement("img");
 
     // liImage.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
+
     liImage.setAttribute("src","img/logo.png");
     li.setAttribute("class","hidden");
     li.setAttribute("id",("card-"+i));
@@ -95,7 +96,6 @@ function buildBoard(gameSize,maxFlip,turnDelay,lives){  //make it instantiate ba
     li.status = "hidden";
 
     li.addEventListener('click', clickFunction);
-
 
     // liText.appendChild(liTextContent);
     // li.appendChild(liText);
