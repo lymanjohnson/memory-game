@@ -137,8 +137,8 @@ function refresh(){
 
 //if the player hasn't flipped a full hand, go back to waiting
   if (currentFlippedCards.length < maxFlip){
-    waitXSeconds(.5);
-    waitForPlayer = true;
+    // waitXSeconds(.5);
+    // waitForPlayer = true;
     return;
   }
 
@@ -147,7 +147,7 @@ function refresh(){
     if (isAMatch(currentFlippedCards)){
       markCardsSolved(currentFlippedCards);
     }
-    else if (isAMatch(currentFlippedCards)){
+    else {
       markCardsHidden(currentFlippedCards);
     }
 
@@ -276,12 +276,18 @@ function isAMatch (hand){     // hand will be an array that contains the indices
 
 function markCardsSolved (hand) {   // hand will be an array that contains the indices of the flipped cards
   for (let i=0;i<hand.length;i++){
+    console.log("marking solved:");
+    console.log("\thand[i]",hand[i]);
+    console.log("\tgameDeck[hand[i]]",gameDeck[hand[i]]);
     gameDeck[hand[i]].status = "solved";
   }
 }
 
 function markCardsHidden (hand) {   // hand will be an array that contains the indices of the flipped cards
   for (let i=0;i<hand.length;i++){
+    console.log("marking wrong (to be hidden):");
+    console.log("\thand[i]",hand[i]);
+    console.log("\tgameDeck[hand[i]]",gameDeck[hand[i]]);
     gameDeck[hand[i]].status = "hidden";
   }
 }
