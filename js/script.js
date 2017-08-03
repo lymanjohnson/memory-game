@@ -197,6 +197,7 @@ function flipEm() {
 }
 
 function spinCuzYouWin(card){
+    waitForPlayer = false;
     let degrees = 0;
     let id = setInterval(frame,flipSpeed);
     function frame() {
@@ -204,7 +205,7 @@ function spinCuzYouWin(card){
         clearInterval(id);
         card.setAttribute("class","solved");
         card.status = "solved";
-        // return;
+        waitForPlayer = true;
       }
       else{
         degrees++;
@@ -215,6 +216,7 @@ function spinCuzYouWin(card){
 }
 
 function spinForAgin(card){
+  waitForPlayer = false;
   let degrees = 180;
   let id = setInterval(frame,flipSpeed);
   function frame() {
@@ -225,6 +227,7 @@ function spinForAgin(card){
       clearInterval(id);
       card.setAttribute("class","hidden");
       card.status = "hidden";
+      waitForPlayer = true;
     }
     else{
       degrees--;
@@ -234,6 +237,7 @@ function spinForAgin(card){
 }
 
 function spinToSee(card){
+  waitForPlayer = false;
   console.log(card);
   let degrees = 0;
   let id = setInterval(frame,flipSpeed);
@@ -245,6 +249,7 @@ function spinToSee(card){
       clearInterval(id);
       card.setAttribute("class","flipped");
       card.status = "flipped";
+      waitForPlayer = true;
     }
     else{
       degrees++;
