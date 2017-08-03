@@ -144,6 +144,7 @@ function refresh(){
 
 //if the player hasn't flipped a full hand, go back to waiting
   if (currentFlippedCards.length < maxFlip){
+    waitXSeconds(1);
     // setTimeout( function() {
       waitForPlayer = true;
     // },turnDelay*1000);
@@ -163,19 +164,17 @@ function refresh(){
 
   }
 
+  waitXSeconds(turnDelay);
   //Wait a few seconds before updating the deck
   //console.log("About to wait #1");
-  setTimeout(function(){
-    //console.log("done waiting #1")
+  // setTimeout(function(){
     flipEm();
-    //console.log("ran flip'em");
     //console.log("About to wait #2");
-    setTimeout(function(){
-      //console.log("done waiting #2")
+    // setTimeout(function(){
       // waitForPlayer = true;
       //console.log("waitForPlayer:",waitForPlayer);
-    },2000);
-  },turnDelay*1000);
+    // },2000);
+  // },turnDelay*1000);
 
 
 
