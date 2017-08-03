@@ -82,9 +82,9 @@ let waitForPlayer = false; // this stops player from clicking when they shouldn'
 
 
 
-buildBoard(gameSize,maxFlip,turnDelay,lives);
+buildBoard();
 
-function buildBoard(gameSize,maxFlip,turnDelay,lives){  //make it instantiate based on parameters
+function buildBoard(){  //make it instantiate based on parameters
 
   for (let i=0;i<gameDeck.length;i++){
     let li = document.createElement("li");
@@ -129,16 +129,29 @@ function clickFunction(){
   //console.log("clicked",currentFlippedCards);
 }
 
-function deductHealth(){
+function isGameOver(){
+  if (lives<=0){
+    playerLoses();
+  }
+  else {
+    let youWon = true;
+    for (i=0;i<gameDeck.length;i++){
+      if (gameDeck[i].status != "solved"){youWon=false;}
+    }
+    if (youWon){playerWins();}
+  }
+}
 
+function deductHealth(){
+  lives -= 1;
 }
 
 function playerWins(){
-
+  alert("you won");
 }
 
 function playerLoses(){
-
+  alert("you lost");
 }
 
 function refresh(){
@@ -172,6 +185,8 @@ function refresh(){
       waitForPlayer = true;
     },800);
   },turnDelay*1000);
+
+  isGameOver();
 
 }
 
