@@ -39,7 +39,7 @@ let youWin = false;
 
 function createPokemonStack(){ //this creates a randomized array containing the numbers 1-493, which will allow the cards in the memory game to refer to a fresh pokemon by their indexID
   let stack = [];
-  for (i=1;i<=30;i++){  //there are 493 pokemon (NOTE:change this back to 493 later)
+  for (i=1;i<=493;i++){
     stack.push(i);
   }
   shuffle(stack);
@@ -69,7 +69,7 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 // STARTS GAME //
 let gameSize = 6; //cards in the game
 let maxFlip = 2; //how many cards you need to match
-let turnDelay = 2 //how long before mis-matched cards hide again (in seconds)
+let turnDelay = 1 //how long before mis-matched cards hide again (in seconds)
 let lives = 6; //number of mistakes you can make
 
 let currentFlippedCards = [];
@@ -144,10 +144,9 @@ function refresh(){
 
 //if the player hasn't flipped a full hand, go back to waiting
   if (currentFlippedCards.length < maxFlip){
-    waitXSeconds(1);
-    // setTimeout( function() {
+    setTimeout( function() {
       waitForPlayer = true;
-    // },turnDelay*1000);
+    },800);
     return;
   }
 
@@ -164,19 +163,12 @@ function refresh(){
 
   }
 
-  waitXSeconds(turnDelay);
-  //Wait a few seconds before updating the deck
-  //console.log("About to wait #1");
-  // setTimeout(function(){
+  setTimeout(function(){
     flipEm();
-    //console.log("About to wait #2");
-    // setTimeout(function(){
-      // waitForPlayer = true;
-      //console.log("waitForPlayer:",waitForPlayer);
-    // },2000);
-  // },turnDelay*1000);
-
-
+    setTimeout(function(){
+      waitForPlayer = true;
+    },800);
+  },turnDelay*1000);
 
 }
 
@@ -215,7 +207,6 @@ function flipEm() {
 
 //function to spin a card into solved state
 function spinCuzYouWin(card){
-    waitForPlayer = false;
     let degrees = 0;
     let id = setInterval(frame,flipSpeed);
     function frame() {
@@ -223,7 +214,6 @@ function spinCuzYouWin(card){
         clearInterval(id);
         card.setAttribute("class","solved");
         card.status = "solved";
-        // waitForPlayer = true;
       }
       else{
         degrees++;
@@ -235,7 +225,6 @@ function spinCuzYouWin(card){
 
 //function to spin a card into hidden state
 function spinForAgin(card){
-  waitForPlayer = false;
   let degrees = 180;
   let id = setInterval(frame,flipSpeed);
   function frame() {
@@ -246,7 +235,6 @@ function spinForAgin(card){
       clearInterval(id);
       card.setAttribute("class","hidden");
       card.status = "hidden";
-      // waitForPlayer = true;
     }
     else{
       degrees--;
@@ -257,8 +245,6 @@ function spinForAgin(card){
 
 //function to spin a card into revealed state
 function spinToSee(card){
-  waitForPlayer = false;
-  //console.log(card);
   let degrees = 0;
   let id = setInterval(frame,flipSpeed);
   function frame() {
@@ -269,7 +255,6 @@ function spinToSee(card){
       clearInterval(id);
       card.setAttribute("class","flipped");
       card.status = "flipped";
-      // waitForPlayer = true;
     }
     else{
       degrees++;
