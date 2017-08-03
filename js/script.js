@@ -67,6 +67,7 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
 
 // STARTS GAME //
+
 let gameSize = 30; //cards in the game
 let maxFlip = 3; //how many cards you need to match
 let turnDelay = 2 //how long before mis-matched cards hide again (in seconds)
@@ -90,12 +91,8 @@ function buildBoard(gameSize,maxFlip,turnDelay,lives){  //make it instantiate ba
     let liImage = document.createElement("img");
 
     // liImage.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
-<<<<<<< HEAD
-    liImage.setAttribute("src","img/logo.jpg");
-=======
 
     liImage.setAttribute("src","img/logo.png");
->>>>>>> hide-images
     li.setAttribute("class","hidden");
     li.setAttribute("id",("card-"+i));
 
@@ -106,10 +103,6 @@ function buildBoard(gameSize,maxFlip,turnDelay,lives){  //make it instantiate ba
 
     li.addEventListener('click', clickFunction);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> hide-images
     // liText.appendChild(liTextContent);
     // li.appendChild(liText);
     li.appendChild(liImage);
@@ -158,31 +151,17 @@ function refresh(){
     return;
   }
 
-<<<<<<< HEAD
-    // this.firstChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[this.cardIndex].symbolID])+".ico"); //makes its image into the right pokemon
-
-  if (currentFlippedCards.length >= maxFlip) {  // if the flipped hand reaches the limit...
-    if (isAMatch(currentFlippedCards)){         // see if the hand is a match
-      markCardsSolved(currentFlippedCards);     // if so, solve them
-=======
 //Otherwise, it will evaluate whether or not it was a match, then wait a few seconds before the next step...
   else{
     //console.log("refresh, first else, currentFlippedCards=",currentFlippedCards);
     if (isAMatch(currentFlippedCards)){
       markCardsSolved(currentFlippedCards);
->>>>>>> hide-images
     }
 
     else {
-<<<<<<< HEAD
-      markCardsHidden(currentFlippedCards);     // otherwise, flip them back over
-    }
-    currentFlippedCards = [];                   // reset the flipped counter to empty
-=======
       markCardsHidden(currentFlippedCards);
     }
 
->>>>>>> hide-images
   }
 
   setTimeout(function(){
@@ -202,24 +181,6 @@ function flipEm() {
     let backEndCard = gameDeck[i];
     let frontEndCard = document.getElementsByTagName("li")[i];
 
-<<<<<<< HEAD
-    frontEndCard.status = backEndCard.status;
-    frontEndCard.setAttribute("class",frontEndCard.status);
-
-    if (frontEndCard.status == "hidden"){
-      frontEndCard.firstChild.setAttribute("src","img/logo.jpg");
-    }
-
-    else if (frontEndCard.status == "solved"){
-      frontEndCard.firstChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[this.cardIndex].symbolID])+".ico");
-      console.log("hi")
-    }
-
-    else if (frontEndCard.status == "flipped"){
-      frontEndCard.firstChild.setAttribute("src","");
-    }
-
-=======
     //console.log(i);
     //console.log(backEndCard);
     //console.log(frontEndCard);
@@ -280,7 +241,6 @@ function spinForAgin(card){
       degrees--;
       card.style.transform = "rotateY("+degrees+"deg)";
     }
->>>>>>> hide-images
   }
 }
 
@@ -326,7 +286,6 @@ function markCardsSolved (hand) { // hand will be an array that contains the ind
     //console.log("\thand[i]",hand[i]);
     //console.log("\tgameDeck[hand[i]]",gameDeck[hand[i]]);
     gameDeck[hand[i]].status = "solved";
-
   }
   currentFlippedCards = [];
 }
@@ -341,19 +300,6 @@ function markCardsHidden (hand) {   // hand will be an array that contains the i
   }
   currentFlippedCards = [];
 }
-<<<<<<< HEAD
-
-function clickFunction() {
-
-  if (gameDeck[this.cardIndex].status == "hidden"){
-    gameDeck[this.cardIndex].status = "flipped";
-    currentFlippedCards.push(this.cardIndex);
-  }
-
-  refresh();
-
-}
-=======
 //
 // function clickFunction() {   /// old version
 //   // //console.log("Before Click");
@@ -387,9 +333,9 @@ function clickFunction() {
   // //console.log("Class attribute",this.getAttribute("class"));
 
 // }
->>>>>>> hide-images
 
-// threeDigitNumber(pokemonStack[gameDeck[this.cardIndex].symbolID])
+
+
 
 // function doTheyMatch(){
 //
