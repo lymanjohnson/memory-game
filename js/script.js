@@ -47,62 +47,90 @@ function createPokemonStack(){ //this creates a randomized array containing the 
 }
 
 
-
-
-
 pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
 
 function createDeck(numberOfCards) {      // creates a randomized card deck
+  alert("got to createDeck");
   let deck = []
+  alert("made empty deck");
   // //console.log(deck);
-  while(numberOfCards%maxFlip != 0){  //Number of cards must be a multiple of the amount you need to match in a hand
+  alert("tweaking deck size loop")
+  while(numberOfCards%gameParameters.maxFlip != 0){  //Number of cards must be a multiple of the amount you need to match in a hand
+    alert(numberOfCards);
     numberOfCards += 1; //keeps adding cards until there's the right amount
   }
+    alert(numberOfCards);
+
+    alert("adding cards to deck")
+
   // //console.log(numberOfCards);
-  for (let i=0;i<(numberOfCards/maxFlip); i++){
-    for (let j=0;j<maxFlip;j++){
+  for (let i=0;i<(numberOfCards/gameParameters.maxFlip); i++){
+    for (let j=0;j<gameParameters.maxFlip;j++){
       deck.push({"symbolID":i,"status":"hidden"});
+      if(deck.length%100==0){alert(deck.length)};
     }
   }
+  alert("finished filling the deck");
   shuffle(deck);
+  alert("finished shuffling the deck");
   return deck;
 }
 
 let startGameButton = document.getElementById("start-game-button");
 startGameButton.addEventListener("click",buttonPressed);
 
-function buttonPressed() { //will redefine the global game parameters based on player selection
-
-  gameSize  = document.getElementById("game-size").value;
-  maxFlip   = document.getElementById("hand-size").value;
-  turnDelay = document.getElementById("speed").value;
-  lives     = document.getElementById("live-count").value;
-
-}
-
 //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
 
 // STARTS GAME //
 
-let gameSize = 15; //cards in the game
-let maxFlip = 3; //how many cards you need to match
-let turnDelay = 2 //how long before mis-matched cards hide again (in seconds)
-let lives = 60; //number of mistakes you can make
+let waitForPlayer = false; // this stops player from clicking when they shouldn't
+
+// let gameSize = 15; //cards in the game
+// let maxFlip = 2; //how many cards you need to match
+// let turnDelay = 2 //how long before mis-matched cards hide again (in seconds)
+// let lives = 60; //number of mistakes you can make
+
+function createGameParameters(size,flips,delay,lives){
+  let parameters =
+                      { "gameSize":size,
+                        "maxFlip":flips,
+                        "turnDelay":delay,
+                        "lives":lives};
+  return parameters;
+}
 
 let currentFlippedCards = [];
-let gameDeck = createDeck(gameSize);  //instantiate deck
 let boardList = document.getElementById("board-list");
 let flipSpeed = 2; //speed of the flip animation. Lower = faster
 
-let waitForPlayer = false; // this stops player from clicking when they shouldn't
+let gameDeck = [];
+let gameParameters;
+
+function buttonPressed() { //will redefine the global game parameters based on player selection
+
+  newGameSize  = parseInt(document.getElementById("game-size").value);
+  newMaxFlip   = parseInt(document.getElementById("hand-size").value);
+  newTurnDelay = 2;   //[will require a lot more tweaking to make this dynamic]
+  newLives     = parseInt(document.getElementById("live-count").value);
 
 
-buttonPressed(); // changes default game values and starts game
-buildBoard();    // renders the gameboard and
+  gameParameters = createGameParameters(15,2,2,60);
+  // gameParameters = createGameParameters(newGameSize,newMaxFlip,newTurnDelay,newLives);
+  alert(gameParameters.gameSize)
+  alert(gameParameters.maxFlip)
+  alert(gameParameters.turnDelay)
+  alert(gameParameters.lives)
+
+  gameDeck = createDeck(newGameSize);  //instantiate deck
+
+
+  buildBoard();
+}
 
 function buildBoard(){  //make it instantiate based on parameters
 
   for (let i=0;i<gameDeck.length;i++){
+
     let li = document.createElement("li");
     // let liText = document.createElement("h1");
     // let liTextContent = document.createTextNode(gameDeck[i].symbolID);
@@ -146,7 +174,7 @@ function clickFunction(){
 }
 
 function isGameOver(){
-  if (lives<=0){
+  if (gameParameters.lives<=0){
     playerLoses();
   }
   else {
@@ -159,7 +187,7 @@ function isGameOver(){
 }
 
 function deductHealth(){
-  lives -= 1/maxFlip;
+  gameParameters.lives -= 1/gameParameters.maxFlip;
 }
 
 function playerWins(){
@@ -175,7 +203,7 @@ function refresh(){
 //board for the player's next move
 
 //if the player hasn't flipped a full hand, go back to waiting
-  if (currentFlippedCards.length < maxFlip){
+  if (currentFlippedCards.length < gameParameters.maxFlip){
     setTimeout( function() {
       waitForPlayer = true;
     },800);
@@ -201,7 +229,7 @@ function refresh(){
       isGameOver();
       waitForPlayer = true;
     },800);
-  },turnDelay*1000);
+  },gameParameters.turnDelay*1000);
 
 
 
@@ -223,11 +251,11 @@ function flipEm() {
     // if they don't match, see what kind of spin they should do
     if (frontEndCard.status != backEndCard.status){
 
-      if (backEndCard.status == "hidden"){  // && currentFlippedCards.length>=maxFlip
+      if (backEndCard.status == "hidden"){  // && currentFlippedCards.length>=gameParameters.maxFlip
         //console.log("should be hidden")
         spinForAgin(frontEndCard);
       }
-      else if (backEndCard.status == "solved" ) { //&& currentFlippedCards.length>=maxFlip
+      else if (backEndCard.status == "solved" ) { //&& currentFlippedCards.length>=gameParameters.maxFlip
         //console.log("should be solved")
         spinCuzYouWin(frontEndCard);
       }
@@ -338,56 +366,54 @@ function markCardsHidden (hand) {   // hand will be an array that contains the i
 
 
 // Open Screen //
-
-function fillForm(data) {
-
-  let wrapper = document.getElementById('board');
-
-  console.log("Created wrapper:",wrapper);
-
-  for (i=0;i<data.length;i++){
-
-    let newInput = document.createElement("input");
-
-    console.log("Main Loop:",i);
-    console.log(data[i].type);
-    if (data[i].type == "select") {
-      console.log("was select, hit the first if");
-      newInput = document.createElement("select");
-    }
-    else if (data[i].type == "textarea") {
-      newInput = document.createElement("textarea");
-      console.log("it was text area, hit the second if");
-    }
-
-    newInput.setAttribute("type",data[i].type);
-    newInput.setAttribute("id",data[i].id);
-    newInput.setAttribute("placeholder",data[i].label);
-    newInput.setAttribute("icon",data[i].icon);
-    console.log(data[i].icon);
-
-    console.log(newInput);
-
-    if (data[i].type == "select") {
-      console.log("The input type was 'select'")
-      newInput.setAttribute("type","select");
-
-      for (j=0;j<data[i].options.length;j++){
-        console.log("sub-loop:",j);
-        let newOption = document.createElement("option");
-        newOption.setAttribute("value",data[i].options[j].value);
-        newOption.setAttribute("label",data[i].options[j].label);
-        newInput.appendChild(newOption);
-        console.log(newOption);
-        console.log(newInput);
-      }
-    console.log(newInput);
-
-    }
-    wrapper.appendChild(newInput);
-    console.log(wrapper);
-  }
-
-}
-
-fillForm(formData);
+//
+// function fillForm(data) {
+//
+//   let wrapper = document.getElementById('board');
+//
+//   console.log("Created wrapper:",wrapper);
+//
+//   for (i=0;i<data.length;i++){
+//
+//     let newInput = document.createElement("input");
+//
+//     console.log("Main Loop:",i);
+//     console.log(data[i].type);
+//     if (data[i].type == "select") {
+//       console.log("was select, hit the first if");
+//       newInput = document.createElement("select");
+//     }
+//     else if (data[i].type == "textarea") {
+//       newInput = document.createElement("textarea");
+//       console.log("it was text area, hit the second if");
+//     }
+//
+//     newInput.setAttribute("type",data[i].type);
+//     newInput.setAttribute("id",data[i].id);
+//     newInput.setAttribute("placeholder",data[i].label);
+//     newInput.setAttribute("icon",data[i].icon);
+//     console.log(data[i].icon);
+//
+//     console.log(newInput);
+//
+//     if (data[i].type == "select") {
+//       console.log("The input type was 'select'")
+//       newInput.setAttribute("type","select");
+//
+//       for (j=0;j<data[i].options.length;j++){
+//         console.log("sub-loop:",j);
+//         let newOption = document.createElement("option");
+//         newOption.setAttribute("value",data[i].options[j].value);
+//         newOption.setAttribute("label",data[i].options[j].label);
+//         newInput.appendChild(newOption);
+//         console.log(newOption);
+//         console.log(newInput);
+//       }
+//     console.log(newInput);
+//
+//     }
+//     wrapper.appendChild(newInput);
+//     console.log(wrapper);
+//   }
+//
+// }
