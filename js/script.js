@@ -46,6 +46,10 @@ function createPokemonStack(){ //this creates a randomized array containing the 
   return stack;
 }
 
+
+
+
+
 pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
 
 function createDeck(numberOfCards) {      // creates a randomized card deck
@@ -64,25 +68,37 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
   return deck;
 }
 
+let startGameButton = document.getElementById("start-game-button");
+startGameButton.addEventListener("click",buttonPressed);
+
+function buttonPressed() { //will redefine the global game parameters based on player selection
+
+  gameSize  = document.getElementById("game-size").value;
+  maxFlip   = document.getElementById("hand-size").value;
+  turnDelay = document.getElementById("speed").value;
+  lives     = document.getElementById("live-count").value;
+
+}
+
 //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
 
 // STARTS GAME //
 
-let gameSize = 10; //cards in the game
-let maxFlip = 2; //how many cards you need to match
+let gameSize = 15; //cards in the game
+let maxFlip = 3; //how many cards you need to match
 let turnDelay = 2 //how long before mis-matched cards hide again (in seconds)
-let lives = 6; //number of mistakes you can make
+let lives = 60; //number of mistakes you can make
 
 let currentFlippedCards = [];
 let gameDeck = createDeck(gameSize);  //instantiate deck
 let boardList = document.getElementById("board-list");
-let flipSpeed = 2;
+let flipSpeed = 2; //speed of the flip animation. Lower = faster
 
 let waitForPlayer = false; // this stops player from clicking when they shouldn't
 
 
-
-buildBoard();
+buttonPressed(); // changes default game values and starts game
+buildBoard();    // renders the gameboard and
 
 function buildBoard(){  //make it instantiate based on parameters
 
