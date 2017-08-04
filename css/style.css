@@ -6,28 +6,33 @@ ul{
 li {
   text-align: center;
   list-style-type: none;
-  width: 150px;
+  width: 200px;
   height: 200px;
   margin: 10px;
   border-style: double;
   border-width: 5px;
   padding: 0px;
-  border-color: blue;
-  /*display: none;*/
+  border-color: gray;
+  border-radius: 100%;
+}
+
+.invisible {
+  display: none;
+  box-shadow: none;
 }
 
 
 
 li img {
-  width: 90%;
-  margin: 5%;
-  margin-top: 18%;
+  width: 100%;
+  /*margin: 5%;*/
+  /*margin-top: 18%;*/
 
 }
 
 
 
-.wrapper {
+#wrapper {
   border-radius: 3px;
   border: 2px solid #C1C1C1;
   box-shadow: 0 1px 4px #C1C1C1;
@@ -35,7 +40,7 @@ li img {
   margin: 50px auto;
 }
 
-.wrapper .header {
+#wrapper .header {
   width: 100%;
   height: 100px;
   background-color: #3E8ACC;
@@ -44,19 +49,19 @@ li img {
   font-family: sans-serif
 }
 
-.wrapper .header .title {
+#wrapper .header .title {
   display: inline-block;
   margin-top: 30px;
   padding-left: 20px
 }
 
-.wrapper .fields {
+#wrapper .fields {
   padding: 25px;
 }
 
-.wrapper .fields input,
-.wrapper .fields textarea,
-.wrapper .fields select
+#wrapper .fields input,
+#wrapper .fields textarea,
+#wrapper .fields select
  {
   padding-left: 15px;
   width: 500px;
@@ -67,17 +72,17 @@ li img {
   font-size: 15px;
 }
 
-.wrapper .fields textarea {
+#wrapper .fields textarea {
   height: 125px;
   padding: 15px;
 }
 
-.wrapper .footer {
+#wrapper .footer {
   background-color: #C8DEF1;
   padding: 15px;
 }
 
-.wrapper .footer button {
+#wrapper .footer button {
   background-color: #3E8ACC;
   width: 120px;
   height: 50px;

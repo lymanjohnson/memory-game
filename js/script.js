@@ -58,7 +58,7 @@ startGameButton.addEventListener("click",buttonPressed);
 // STARTS GAME //
 let gameIsRunning = true;
 let youWin = false;
-let pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
+let pokemonStack; //a fresh randomized array of numers 1-493
 let waitForPlayer = false; // this stops player from clicking when they shouldn't
 
 // let gameSize = 15; //cards in the game
@@ -83,20 +83,19 @@ let gameDeck = [];
 let gameParameters;
 
 function buttonPressed() { //will redefine the global game parameters based on player selection
-
+  pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
   newGameSize  = parseInt(document.getElementById("game-size").value);
   newMaxFlip   = parseInt(document.getElementById("hand-size").value);
   newTurnDelay = 2;   //[will require a lot more tweaking to make this dynamic]
-  newLives     = parseInt(document.getElementById("live-count").value);
+  newLives     = parseInt(document.getElementById("live-count").value)*newGameSize/newMaxFlip;
+    // number of mistakes is weighted by the relative game size and hand size
 
-
-  gameParameters = createGameParameters(15,2,2,60);
-  // gameParameters = createGameParameters(newGameSize,newMaxFlip,newTurnDelay,newLives);
+  // gameParameters = createGameParameters(15,2,2,60);
+  gameParameters = createGameParameters(newGameSize,newMaxFlip,newTurnDelay,newLives);
   gameDeck = createDeck(newGameSize);  //instantiate deck
-  alert("finished creating deck, building board");
 
   buildBoard();
-  alert("built board");
+
 }
 
 function buildBoard(){  //make it instantiate based on parameters
@@ -125,9 +124,10 @@ function buildBoard(){  //make it instantiate based on parameters
     // li.appendChild(liText);
     li.appendChild(liImage);
     boardList.appendChild(li);
-
-    waitForPlayer = true;
   }
+  waitForPlayer = true;
+  document.getElementById("wrapper").classList.add("invisible");
+  document.getElementById("board").classList.remove("invisible");
 }
 
 function clickFunction(){
@@ -164,10 +164,23 @@ function deductHealth(){
 
 function playerWins(){
   alert("you won");
+  startOver();
+
 }
 
 function playerLoses(){
   alert("you lost");
+  startOver();
+}
+
+function startOver(){
+  let theWrapper = document.getElementById("wrapper");
+  let theBoard = document.getElementById("board");
+  let theList  = document.getElementById("board-list");
+
+  theList.innerHTML = "";
+  theBoard.classList.add("invisible");
+  theWrapper.classList.remove("invisible");
 }
 
 function refresh(){
@@ -335,57 +348,3 @@ function markCardsHidden (hand) {   // hand will be an array that contains the i
   }
   currentFlippedCards = [];
 }
-
-
-// Open Screen //
-//
-// function fillForm(data) {
-//
-//   let wrapper = document.getElementById('board');
-//
-//   console.log("Created wrapper:",wrapper);
-//
-//   for (i=0;i<data.length;i++){
-//
-//     let newInput = document.createElement("input");
-//
-//     console.log("Main Loop:",i);
-//     console.log(data[i].type);
-//     if (data[i].type == "select") {
-//       console.log("was select, hit the first if");
-//       newInput = document.createElement("select");
-//     }
-//     else if (data[i].type == "textarea") {
-//       newInput = document.createElement("textarea");
-//       console.log("it was text area, hit the second if");
-//     }
-//
-//     newInput.setAttribute("type",data[i].type);
-//     newInput.setAttribute("id",data[i].id);
-//     newInput.setAttribute("placeholder",data[i].label);
-//     newInput.setAttribute("icon",data[i].icon);
-//     console.log(data[i].icon);
-//
-//     console.log(newInput);
-//
-//     if (data[i].type == "select") {
-//       console.log("The input type was 'select'")
-//       newInput.setAttribute("type","select");
-//
-//       for (j=0;j<data[i].options.length;j++){
-//         console.log("sub-loop:",j);
-//         let newOption = document.createElement("option");
-//         newOption.setAttribute("value",data[i].options[j].value);
-//         newOption.setAttribute("label",data[i].options[j].label);
-//         newInput.appendChild(newOption);
-//         console.log(newOption);
-//         console.log(newInput);
-//       }
-//     console.log(newInput);
-//
-//     }
-//     wrapper.appendChild(newInput);
-//     console.log(wrapper);
-//   }
-//
-// }
