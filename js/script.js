@@ -20,22 +20,10 @@ function shuffle(array) {
   return array;
 }
 
-function waitXSeconds(x){
-  run = true;
-  setTimeout(function(){run = false;},x*1000);
-  while(run=false){
-    return;
-  }
-  // //console.log("this was written second but prints first");
-}
-
 //https://stackoverflow.com/questions/2998784/how-to-output-integers-with-leading-zeros-in-javascript
 function threeDigitNumber(num){ //returns a 3 digit number with leading zeros e.g. 7 => 007
   return ("00" + num).slice (-3);
 }
-
-let gameIsRunning = true;
-let youWin = false;
 
 function createPokemonStack(){ //this creates a randomized array containing the numbers 1-493, which will allow the cards in the memory game to refer to a fresh pokemon by their indexID
   let stack = [];
@@ -46,33 +34,19 @@ function createPokemonStack(){ //this creates a randomized array containing the 
   return stack;
 }
 
-
-pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
-
 function createDeck(numberOfCards) {      // creates a randomized card deck
-  alert("got to createDeck");
   let deck = []
-  alert("made empty deck");
-  // //console.log(deck);
-  alert("tweaking deck size loop")
   while(numberOfCards%gameParameters.maxFlip != 0){  //Number of cards must be a multiple of the amount you need to match in a hand
-    alert(numberOfCards);
     numberOfCards += 1; //keeps adding cards until there's the right amount
   }
-    alert(numberOfCards);
-
-    alert("adding cards to deck")
 
   // //console.log(numberOfCards);
   for (let i=0;i<(numberOfCards/gameParameters.maxFlip); i++){
     for (let j=0;j<gameParameters.maxFlip;j++){
       deck.push({"symbolID":i,"status":"hidden"});
-      if(deck.length%100==0){alert(deck.length)};
     }
   }
-  alert("finished filling the deck");
   shuffle(deck);
-  alert("finished shuffling the deck");
   return deck;
 }
 
@@ -82,7 +56,9 @@ startGameButton.addEventListener("click",buttonPressed);
 //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
 
 // STARTS GAME //
-
+let gameIsRunning = true;
+let youWin = false;
+let pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
 let waitForPlayer = false; // this stops player from clicking when they shouldn't
 
 // let gameSize = 15; //cards in the game
@@ -116,15 +92,11 @@ function buttonPressed() { //will redefine the global game parameters based on p
 
   gameParameters = createGameParameters(15,2,2,60);
   // gameParameters = createGameParameters(newGameSize,newMaxFlip,newTurnDelay,newLives);
-  alert(gameParameters.gameSize)
-  alert(gameParameters.maxFlip)
-  alert(gameParameters.turnDelay)
-  alert(gameParameters.lives)
-
   gameDeck = createDeck(newGameSize);  //instantiate deck
-
+  alert("finished creating deck, building board");
 
   buildBoard();
+  alert("built board");
 }
 
 function buildBoard(){  //make it instantiate based on parameters
