@@ -170,13 +170,17 @@ function playerWins(){
 
 function playerLoses(){
   alert("you lost");
+
   startOver();
 }
 
 function startOver(){
-  let theWrapper = document.getElementById("wrapper");
-  let theBoard = document.getElementById("board");
-  let theList  = document.getElementById("board-list");
+  let theWrapper  = document.getElementById("wrapper");
+  let theBoard    = document.getElementById("board");
+  let theList     = document.getElementById("board-list");
+  let winScreen   = document.getElementById("win-screen");
+  let lossScreen  = document.getElementById("loss-screen");
+
 
   theList.innerHTML = "";
   theBoard.classList.add("invisible");
