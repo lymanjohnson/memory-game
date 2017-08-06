@@ -63,11 +63,15 @@ startOverButton2.addEventListener("click",startOver);
 
 // STARTS GAME //
 
-let soundMatch    = getElementById("sound-match");
-let soundWin      = getElementById("sound-win");
-let soundLose     = getElementById("sound-lose");
-let soundPlaying  = getElementById("sound-playing");
-let soundSelect   = getElementById("sound-select");
+let musicMatch    = document.getElementById("sound-match");
+let musicWin      = document.getElementById("sound-win");
+let musicLose     = document.getElementById("sound-lose");
+let musicPlaying  = document.getElementById("sound-playing");
+let musicSelect   = document.getElementById("sound-select");
+let soundError    = document.getElementById("sound-error");
+
+musicSelect.currentTime=1;
+musicSelect.play();
 
 let gameIsRunning = true;
 let youWin = false;
@@ -96,6 +100,7 @@ let gameDeck = [];
 let gameParameters;
 
 function buttonPressed() { //will redefine the global game parameters based on player selection
+
   pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
   newGameSize  = 4//parseInt(document.getElementById("game-size").value);
   newMaxFlip   = 2//parseInt(document.getElementById("hand-size").value);
@@ -108,6 +113,8 @@ function buttonPressed() { //will redefine the global game parameters based on p
   gameDeck = createDeck(newGameSize);  //instantiate deck
 
   buildBoard();
+  musicSelect.stop();
+  musicSelect.currentTime = 1
 
 }
 
@@ -302,6 +309,7 @@ function spinCuzYouWin(card){
 function spinForAgin(card){
   deductHealth();
   let degrees = 0;
+  soundError.play();
   let id = setInterval(frame,flipSpeed);
   function frame() {
     if (degrees == 90){
