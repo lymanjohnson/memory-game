@@ -43,7 +43,7 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
   // //console.log(numberOfCards);
   for (let i=0;i<(numberOfCards/gameParameters.maxFlip); i++){
     for (let j=0;j<gameParameters.maxFlip;j++){
-      deck.push({"symbolID":i,"status":"hidden"});
+      deck.push({"symbolID":i+1,"status":"hidden"});
     }
   }
   shuffle(deck);
@@ -62,6 +62,13 @@ startOverButton2.addEventListener("click",startOver);
 //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
 
 // STARTS GAME //
+
+let soundMatch    = getElementById("sound-match");
+let soundWin      = getElementById("sound-win");
+let soundLose     = getElementById("sound-lose");
+let soundPlaying  = getElementById("sound-playing");
+let soundSelect   = getElementById("sound-select");
+
 let gameIsRunning = true;
 let youWin = false;
 let pokemonStack; //a fresh randomized array of numers 1-493
@@ -112,9 +119,14 @@ function buildBoard(){  //make it instantiate based on parameters
     // let liText = document.createElement("h1");
     // let liTextContent = document.createTextNode(gameDeck[i].symbolID);
     let liImage = document.createElement("img");
+    let liSound = document.createElement("audio");
 
     // liImage.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".ico");
 
+    console.log(i);
+    console.log(gameDeck[i]);
+    console.log(gameDeck[i].symbolID);
+    liSound.setAttribute("src","wav/"+threeDigitNumber(gameDeck[i].symbolID)+".wav");
     liImage.setAttribute("src","img/logo.png");
     li.setAttribute("class","hidden");
     li.setAttribute("id",("card-"+i));
@@ -129,6 +141,7 @@ function buildBoard(){  //make it instantiate based on parameters
     // liText.appendChild(liTextContent);
     // li.appendChild(liText);
     li.appendChild(liImage);
+    li.appendChild(liSound);
     boardList.appendChild(li);
   }
   waitForPlayer = true;
@@ -313,6 +326,9 @@ function spinToSee(card){
   function frame() {
     if (degrees == 90){
       card.firstChild.setAttribute("src","img/"+threeDigitNumber(pokemonStack[gameDeck[card.cardIndex].symbolID])+".ico");
+      console.log(card);
+      console.log(card.lastChild);
+      card.lastChild.play();
     }
     if (degrees <= 0){
       clearInterval(id);
