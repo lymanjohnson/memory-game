@@ -53,6 +53,12 @@ function createDeck(numberOfCards) {      // creates a randomized card deck
 let startGameButton = document.getElementById("start-game-button");
 startGameButton.addEventListener("click",buttonPressed);
 
+let startOverButton1 = document.getElementById("startover-button-1");
+startOverButton1.addEventListener("click",startOver);
+
+let startOverButton2 = document.getElementById("startover-button-2");
+startOverButton2.addEventListener("click",startOver);
+
 //to be called after requisite number of cards are flipped, goes through the deck and finds the flipped cards and compares them. Returns the deck with the cards marked "solved" if appropriate. Otherwise it returns them flipped back over.
 
 // STARTS GAME //
@@ -84,10 +90,10 @@ let gameParameters;
 
 function buttonPressed() { //will redefine the global game parameters based on player selection
   pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
-  newGameSize  = parseInt(document.getElementById("game-size").value);
-  newMaxFlip   = parseInt(document.getElementById("hand-size").value);
+  newGameSize  = 4//parseInt(document.getElementById("game-size").value);
+  newMaxFlip   = 2//parseInt(document.getElementById("hand-size").value);
   newTurnDelay = 2;   //[will require a lot more tweaking to make this dynamic]
-  newLives     = parseInt(document.getElementById("live-count").value)*newGameSize/newMaxFlip;
+  newLives     = 3;//parseInt(document.getElementById("live-count").value)*newGameSize/newMaxFlip;
     // number of mistakes is weighted by the relative game size and hand size
 
   // gameParameters = createGameParameters(15,2,2,60);
@@ -163,15 +169,19 @@ function deductHealth(){
 }
 
 function playerWins(){
-  alert("you won");
-  startOver();
+  let theBoard    = document.getElementById("board");
+  let winScreen  = document.getElementById("win-screen");
+  theBoard.classList.add("invisible");
+  winScreen.classList.remove("invisible");
 
 }
 
 function playerLoses(){
-  alert("you lost");
+  let theBoard    = document.getElementById("board");
+  let lossScreen  = document.getElementById("loss-screen");
+  theBoard.classList.add("invisible");
+  lossScreen.classList.remove("invisible");
 
-  startOver();
 }
 
 function startOver(){
@@ -185,6 +195,9 @@ function startOver(){
   theList.innerHTML = "";
   theBoard.classList.add("invisible");
   theWrapper.classList.remove("invisible");
+  winScreen.classList.add("invisible");
+  lossScreen.classList.add("invisible");
+
 }
 
 function refresh(){
@@ -217,11 +230,8 @@ function refresh(){
     setTimeout(function(){
       isGameOver();
       waitForPlayer = true;
-    },800);
-  },gameParameters.turnDelay*1000);
-
-
-
+    },750);
+  },gameParameters.turnDelay*850);
 }
 
 function flipEm() {
