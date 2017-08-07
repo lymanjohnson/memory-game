@@ -1,33 +1,8 @@
 // http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-function shuffle(array) {
-  var currentIndex = array.length
-    , temporaryValue
-    , randomIndex
-    ;
 
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
-}
 
 //https://stackoverflow.com/questions/2998784/how-to-output-integers-with-leading-zeros-in-javascript
-function threeDigitNumber(num){ //returns a 3 digit number with leading zeros e.g. 7 => 007
-  return ("00" + num).slice (-3);
-}
 
-function twoDigitNumber(num){ //returns a 3 digit number with leading zeros e.g. 7 => 007
-  return ("0" + num).slice (-2);
-}
 
 
 
