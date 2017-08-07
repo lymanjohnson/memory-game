@@ -77,6 +77,8 @@ musicSelect.volume = .6;
 musicSelect.currentTime = 12.25;
 musicSelect.play();
 
+let lifeCounter  =  document.getElementById("life-counter");
+
 let gameIsRunning = true;
 let youWin = false;
 let pokemonStack; //a fresh randomized array of numers 1-493
@@ -124,6 +126,15 @@ function buttonPressed() { //will redefine the global game parameters based on p
 }
 
 function buildBoard(){  //make it instantiate based on parameters
+
+
+  for (let i=0;i<=lives;i++){
+    let lifeIcon = document.createElement.("img");
+    lifeIcon.setAttribute("src","logo.png");
+    lifeIcon.classList.add("life-icn");
+    lifeCounter.appendChild(lifeIcon);
+
+  }
 
   for (let i=0;i<gameDeck.length;i++){
 
