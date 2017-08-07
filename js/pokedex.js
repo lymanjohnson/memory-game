@@ -68,7 +68,7 @@ function createPokeDexArray(){
 }
 
 pokedexArray = createPokeDexArray();
-console.log(pokedexArray);
+// console.log(pokedexArray);
 
 function createPokeDexNodes(){
   // let pokedex = document.getElementById("pokedex");
@@ -84,14 +84,12 @@ function createPokeDexNodes(){
   return pokedex
 }
 
-console.log(pok);
-
 pokedexNodesArray = createPokeDexNodes();
 
 function createPokeDex() {
   let pokedexElement = document.getElementById("pokedex");
   for (i=0;i<pokedexNodesArray.length;i++){
-    pokedexElement.appendChild(pokedex[i]);
+    pokedexElement.appendChild(pokedexNodesArray[i]);
   }
 }
 

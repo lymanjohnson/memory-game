@@ -30,20 +30,20 @@ li img {
 
 }
 
-
+#c95907
 
 #wrapper {
   border-radius: 3px;
   border: 2px solid #C1C1C1;
   box-shadow: 0 1px 4px #C1C1C1;
-  width: 675px;
-  margin: 50px auto;
+  width: 90%;
+  margin: 5% auto;
 }
 
 #wrapper .header {
   width: 100%;
   height: 100px;
-  background-color: #3E8ACC;
+  background-color: #c95907;
   color: #fff;
   font-size: 30px;
   font-family: sans-serif
@@ -83,7 +83,7 @@ li img {
 }
 
 #wrapper .footer button {
-  background-color: #3E8ACC;
+  background-color: #c95907;
   width: 120px;
   height: 50px;
   color: #fff;
