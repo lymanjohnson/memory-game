@@ -40,8 +40,6 @@ li img {
 
 }
 
-#c95907
-
 #wrapper {
   border-radius: 3px;
   border: 2px solid #C1C1C1;
@@ -134,10 +132,7 @@ li img {
   margin-left: 25%;
   margin-right: 25%;
   border: 2px solid black;
-  flex-direction: column;
-  background-image: url("img/background.jpg");
-  background-repeat: repeat;
-  background-size: cover;
+
 }
 
 .reset-button {
@@ -152,8 +147,8 @@ li img {
 h1 {
   font-family: monospace;
   color: gray;
-  width: 50%;
-  margin: 10% 25% 8% 25%;
+  width: 80%;
+  margin: 10%;
   text-align: center;
   font-size: 48pt;
 }
