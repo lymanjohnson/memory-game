@@ -70,7 +70,11 @@ let musicPlaying  = document.getElementById("sound-playing");
 let musicSelect   = document.getElementById("sound-select");
 let soundError    = document.getElementById("sound-error");
 
-musicSelect.currentTime=1;
+musicWin.volume = .7;
+musicLose.volume = .7;
+musicSelect.volume = .6;
+
+musicSelect.currentTime = 12.25;
 musicSelect.play();
 
 let gameIsRunning = true;
@@ -100,12 +104,13 @@ let gameDeck = [];
 let gameParameters;
 
 function buttonPressed() { //will redefine the global game parameters based on player selection
-
+  musicSelect.pause();
+  musicSelect.currentTime = 12.25;
   pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
   newGameSize  = 4//parseInt(document.getElementById("game-size").value);
   newMaxFlip   = 2//parseInt(document.getElementById("hand-size").value);
   newTurnDelay = 2;   //[will require a lot more tweaking to make this dynamic]
-  newLives     = 3;//parseInt(document.getElementById("live-count").value)*newGameSize/newMaxFlip;
+  newLives     = 1; //parseInt(document.getElementById("live-count").value)*newGameSize/newMaxFlip;
     // number of mistakes is weighted by the relative game size and hand size
 
   // gameParameters = createGameParameters(15,2,2,60);
@@ -114,7 +119,7 @@ function buttonPressed() { //will redefine the global game parameters based on p
 
   buildBoard();
   musicSelect.stop();
-  musicSelect.currentTime = 1
+  musicSelect.currentTime = 12.25;
 
 }
 
@@ -133,7 +138,7 @@ function buildBoard(){  //make it instantiate based on parameters
     console.log(i);
     console.log(gameDeck[i]);
     console.log(gameDeck[i].symbolID);
-    liSound.setAttribute("src","wav/"+threeDigitNumber(gameDeck[i].symbolID)+".wav");
+    liSound.setAttribute("src","wav/"+threeDigitNumber(pokemonStack[gameDeck[i].symbolID])+".wav");
     liImage.setAttribute("src","img/logo.png");
     li.setAttribute("class","hidden");
     li.setAttribute("id",("card-"+i));
@@ -189,6 +194,8 @@ function deductHealth(){
 }
 
 function playerWins(){
+  musicWin.currentTime=.5;
+  musicWin.play()
   let theBoard    = document.getElementById("board");
   let winScreen  = document.getElementById("win-screen");
   theBoard.classList.add("invisible");
@@ -197,6 +204,8 @@ function playerWins(){
 }
 
 function playerLoses(){
+  musicLose.currentTime=.5;
+  musicLose.play();
   let theBoard    = document.getElementById("board");
   let lossScreen  = document.getElementById("loss-screen");
   theBoard.classList.add("invisible");
@@ -211,12 +220,16 @@ function startOver(){
   let winScreen   = document.getElementById("win-screen");
   let lossScreen  = document.getElementById("loss-screen");
 
-
+  musicLose.pause();
+  musicWin.pause();
   theList.innerHTML = "";
   theBoard.classList.add("invisible");
   theWrapper.classList.remove("invisible");
   winScreen.classList.add("invisible");
   lossScreen.classList.add("invisible");
+  musicSelect.currentTime = 12.25;
+  musicSelect.play();
+
 
 }
 
@@ -290,6 +303,8 @@ function flipEm() {
 //function to spin a card into solved state
 function spinCuzYouWin(card){
     let degrees = 0;
+    musicMatch.currentTime=.5;
+    musicMatch.play()
     let id = setInterval(frame,flipSpeed);
     function frame() {
       if (degrees >= 90){
@@ -304,7 +319,6 @@ function spinCuzYouWin(card){
     }
   }
 }
-
 //function to spin a card into hidden state
 function spinForAgin(card){
   deductHealth();
