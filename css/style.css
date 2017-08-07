@@ -6,8 +6,8 @@ ul{
 li {
   text-align: center;
   list-style-type: none;
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   margin: 10px;
   border-style: double;
   border-width: 10px;
@@ -21,7 +21,16 @@ li {
   box-shadow: none;
 }
 
+.flex {
+  display: flex;
+}
 
+
+#timer {
+  font-family: monospace;
+  font-size: 32pt;
+  color: red;
+}
 
 li img {
   width: 100%;
@@ -109,12 +118,29 @@ li img {
 }
 
 #pokedex {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 
+}
+
+#winscreen, #loss-screen {
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+  border: 2px solid black;
+  flex-direction: column;
+}
+
+
+#winscreen h1, #loss-screen h1 {
+  font-family: monospace;
+  color: gray;
+  width: 100%;
+  margin: none;
+  text-align: center;
 }
 
 .entry-container {

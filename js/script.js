@@ -97,7 +97,7 @@ function setTime()
 {
     totalSeconds += 1;
     secondsLabel.innerHTML = twoDigitNumber(totalSeconds%60);
-    minutesLabel.innerHTML = parseInt(totalSeconds/60)
+    minutesLabel.innerHTML = twoDigitNumber(parseInt(totalSeconds/60))
 }
 
 function addTime(num) {
@@ -200,6 +200,7 @@ function playerWins(){
   let winScreen  = document.getElementById("win-screen");
   theBoard.classList.add("invisible");
   winScreen.classList.remove("invisible");
+  winScreen.classList.add("flex");
 
 }
 
@@ -210,6 +211,7 @@ function playerLoses(){
   let lossScreen  = document.getElementById("loss-screen");
   theBoard.classList.add("invisible");
   lossScreen.classList.remove("invisible");
+  lossScreen.classList.add("flex");
 
 }
 
