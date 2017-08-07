@@ -17,13 +17,6 @@
           </div>
           <div class="fields" id="fields">
 
-            <!-- <h3>Reaction Time</h3>
-            <select name="Reaction Time" type="select" id="speed" placeholder="Slow" icon="">
-              <option value="game-speed-slow" label="Snorlax"></option>
-              <option value="game-speed-medium" label="Rattata"></option>
-              <option value="game-speed-fast" label="Jolteon"></option>
-            </select> -->
-
             <h3>Pokedex Size</h3>
             <select name ="Game Size" type="select" id="game-size" placeholder=10 icon="">
               <option value=5  label="Diglet"></option>
@@ -35,8 +28,8 @@
               <option value=200 label="Wallord"></option>
             </select>
 
-            <h3>Pokeballs</h3>
-            <select name="Match Tount" type="select" id="hand-size" placeholder=2 icon="">
+            <h3>Matching Count</h3>
+            <select name="Match Count" type="select" id="hand-size" placeholder=2 icon="">
               <option value=2 label="2"></option>
               <option value=3 label="3"></option>
               <option value=4 label="4"></option>
@@ -49,7 +42,7 @@
               <option value=5 label="Ample"></option>
               <option value=10 label="Scads"></option>
               <option value=20 label="Oodles"></option>
-              <option value=1000000 label="Like, Literally Millions"></option>
+              <option value=300 label="A Whopping Amount"></option>
             </select>
           </div>
 
@@ -60,7 +53,11 @@
   </div>
 
 
-  <div id="board">
+  <div id="board" class=invisible>
+    <div id="timer">
+      <span id="minutes"></span> : <span id="seconds"></span>
+    </div>
+
     <div id="life-counter"></div>
     <ul id="board-list">
     </ul>

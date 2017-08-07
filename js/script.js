@@ -25,6 +25,10 @@ function threeDigitNumber(num){ //returns a 3 digit number with leading zeros e.
   return ("00" + num).slice (-3);
 }
 
+function twoDigitNumber(num){ //returns a 3 digit number with leading zeros e.g. 7 => 007
+  return ("0" + num).slice (-2);
+}
+
 function createPokemonStack(){ //this creates a randomized array containing the numbers 1-493, which will allow the cards in the memory game to refer to a fresh pokemon by their indexID
   let stack = [];
   for (i=1;i<=493;i++){
@@ -126,9 +130,34 @@ function buttonPressed() { //will redefine the global game parameters based on p
 
 }
 
+let minutesLabel = document.getElementById("minutes");
+let secondsLabel = document.getElementById("seconds");
+let totalSeconds = 0;
+setInterval(setTime, 1000);
+
+function setTime()
+{
+    totalSeconds += 1;
+    secondsLabel.innerHTML = twoDigitNumber(totalSeconds%60);
+    minutesLabel.innerHTML = parseInt(totalSeconds/60)
+}
+
+function addTime(num) {
+    let valString = num + "";
+    if(valString.length < 2)
+    {
+        return "0" + valString;
+    }
+    else
+    {
+        return valString;
+    }
+}
+
 function buildBoard(){  //make it instantiate based on parameters
 
   lifeCounter.innerHTML="";
+  totalSeconds = 0;
 
   for (let i=0;i<gameParameters.lives;i++){
     let lifeIcon = document.createElement("img");

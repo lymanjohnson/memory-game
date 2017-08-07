@@ -97,5 +97,13 @@ li img {
 }
 
 #life-counter {
-  height: 10px;
+  height: 10%;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+#time {
+  display: flex;
+  flex-flow: row;
 }
