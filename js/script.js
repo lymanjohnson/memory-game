@@ -78,6 +78,7 @@ musicSelect.currentTime = 12.25;
 musicSelect.play();
 
 let lifeCounter  =  document.getElementById("life-counter");
+console.log(lifeCounter);
 
 let gameIsRunning = true;
 let youWin = false;
@@ -109,10 +110,10 @@ function buttonPressed() { //will redefine the global game parameters based on p
   musicSelect.pause();
   musicSelect.currentTime = 12.25;
   pokemonStack = createPokemonStack(); //a fresh randomized array of numers 1-493
-  newGameSize  = 4//parseInt(document.getElementById("game-size").value);
-  newMaxFlip   = 2//parseInt(document.getElementById("hand-size").value);
+  newGameSize  = parseInt(document.getElementById("game-size").value);
+  newMaxFlip   = parseInt(document.getElementById("hand-size").value);
   newTurnDelay = 2;   //[will require a lot more tweaking to make this dynamic]
-  newLives     = 1; //parseInt(document.getElementById("live-count").value)*newGameSize/newMaxFlip;
+  newLives     = parseInt(document.getElementById("live-count").value)*newGameSize/newMaxFlip;
     // number of mistakes is weighted by the relative game size and hand size
 
   // gameParameters = createGameParameters(15,2,2,60);
@@ -120,18 +121,19 @@ function buttonPressed() { //will redefine the global game parameters based on p
   gameDeck = createDeck(newGameSize);  //instantiate deck
 
   buildBoard();
-  musicSelect.stop();
+  musicSelect.pause();
   musicSelect.currentTime = 12.25;
 
 }
 
 function buildBoard(){  //make it instantiate based on parameters
 
+  lifeCounter.innerHTML="";
 
-  for (let i=0;i<=lives;i++){
-    let lifeIcon = document.createElement.("img");
-    lifeIcon.setAttribute("src","logo.png");
-    lifeIcon.classList.add("life-icn");
+  for (let i=0;i<gameParameters.lives;i++){
+    let lifeIcon = document.createElement("img");
+    lifeIcon.setAttribute("src","img/logo.png");
+    lifeIcon.classList.add("life-icon");
     lifeCounter.appendChild(lifeIcon);
 
   }
@@ -333,6 +335,7 @@ function spinCuzYouWin(card){
 //function to spin a card into hidden state
 function spinForAgin(card){
   deductHealth();
+
   let degrees = 0;
   soundError.play();
   let id = setInterval(frame,flipSpeed);
@@ -410,4 +413,5 @@ function markCardsHidden (hand) {   // hand will be an array that contains the i
     gameDeck[hand[i]].status = "hidden";
   }
   currentFlippedCards = [];
+  lifeCounter.removeChild(lifeCounter.lastChild);
 }

@@ -91,3 +91,11 @@ li img {
   border-radius: 3px;
   font-size: 15px;
 }
+
+.life-icon {
+  width: 2%;
+}
+
+#life-counter {
+  height: 10px;
+}
