@@ -29,6 +29,23 @@ function twoDigitNumber(num){ //returns a 3 digit number with leading zeros e.g.
   return ("0" + num).slice (-2);
 }
 
+function createPokeDex(){
+  let pokedex = document.getElementById("pokedex");
+  for (i=1;i<=483;i++){
+    let entry = document.createElement("img");
+    entry.setAttribute("src","img/"+threeDigitNumber(i)+".ico");
+    let entryContainer = document.createElement("div");
+    entryContainer.style.filter= "grayscale(100%)";
+    entryContainer.classList.add("entry-container");
+    entryContainer.setAttribute("id","pokedex"+i);
+    entryContainer.appendChild(entry);
+    pokedex.appendChild(entryContainer);
+  }
+
+}
+
+createPokeDex();
+
 function createPokemonStack(){ //this creates a randomized array containing the numbers 1-493, which will allow the cards in the memory game to refer to a fresh pokemon by their indexID
   let stack = [];
   for (i=1;i<=493;i++){
@@ -332,6 +349,7 @@ function flipEm() {
       else if (backEndCard.status == "solved" ) { //&& currentFlippedCards.length>=gameParameters.maxFlip
         //console.log("should be solved")
         spinCuzYouWin(frontEndCard);
+
       }
       else if (backEndCard.status == "flipped"){
         //console.log("should be flipped")
@@ -344,6 +362,17 @@ function flipEm() {
 
 //function to spin a card into solved state
 function spinCuzYouWin(card){
+    console.log("card.cardIndex",card.cardIndex)
+    console.log("gameDeck[card.cardIndex]");
+    console.log("gameDeck[card.cardIndex]");
+    let thisPokemonID = "pokedex"+gameDeck[card.cardIndex].symbolID
+    console.log(thisPokemonID);
+    let thisPokemon   = document.getElementById(thisPokemonID);
+    thisPokemon.style.filter=""
+    thisPokemon.style.border="1px solid green";
+
+
+
     let degrees = 0;
     musicMatch.currentTime=.5;
     musicMatch.play()
