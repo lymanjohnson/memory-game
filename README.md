@@ -1,5 +1,7 @@
-Memory Game
-In addition to the "Hard Mode" Features (timer, life coutner, etc), it includes:
+MEMORY GAME
+
+In addition to the "Hard Mode" Features (timer, life counter, etc), it includes:
+
 - Sound effects and intro music
 - A rotating cast of pokemon that are different every game, pulled from a collection of the first 483 pokemon. Their unique sound effects play when you flip them over.
 - Game settings. You can tweak the number of lives you start with, the size of the board, and how many cards you need to match to clear the cards. The default match size is a pair, but perhaps you want to find a three-, four-, or five-of-a-kind
