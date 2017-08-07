@@ -362,14 +362,19 @@ function flipEm() {
 
 //function to spin a card into solved state
 function spinCuzYouWin(card){
-    console.log("card.cardIndex",card.cardIndex)
-    console.log("gameDeck[card.cardIndex]");
-    console.log("gameDeck[card.cardIndex]");
-    let thisPokemonID = "pokedex"+gameDeck[card.cardIndex].symbolID
-    console.log(thisPokemonID);
+    let thisPokemonSymbol = pokemonStack[gameDeck[card.cardIndex].symbolID];
+    // console.log("card.cardIndex",card.cardIndex);
+    // console.log("gameDeck[card.cardIndex]",gameDeck[card.cardIndex]);
+    // console.log("gameDeck[card.cardIndex]",gameDeck[card.cardIndex]);
+    // // console.log("thisPokemonSymbol",thisPokemonSymbol);
+    // console.log("pokemonStack[gameDeck[card.cardIndex].symbolID]",pokemonStack[gameDeck[card.cardIndex].symbolID]);
+    let thisPokemonID = "pokedex"+thisPokemonSymbol;
+    console.log("thisPokemonID",thisPokemonID);
     let thisPokemon   = document.getElementById(thisPokemonID);
+    console.log("thisPokemon",thisPokemon);
     thisPokemon.style.filter=""
     thisPokemon.style.border="1px solid green";
+    thisPokemon.style.backgroundColor="gold";
 
 
 
