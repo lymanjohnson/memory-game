@@ -119,7 +119,7 @@ function buildBoard(){  //make it instantiate based on parameters
 
   for (let i=0;i<gameParameters.lives;i++){
     let lifeIcon = document.createElement("img");
-    lifeIcon.setAttribute("src","img/logo.png");
+    lifeIcon.setAttribute("src","img/025.ico");
     lifeIcon.classList.add("life-icon");
     lifeCounter.appendChild(lifeIcon);
 
