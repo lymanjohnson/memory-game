@@ -119,13 +119,12 @@ li img {
 
 .entry-container {
   margin: 2px;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 100%;
   border: 1px solid black;
 }
 
 .entry-container img {
   height: 100%;
-  width: 100%;
 }
