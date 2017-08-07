@@ -75,8 +75,7 @@ function buttonPressed() { //will redefine the global game parameters based on p
   newGameSize  = parseInt(document.getElementById("game-size").value);
   newMaxFlip   = parseInt(document.getElementById("hand-size").value);
   newTurnDelay = 2;   //[will require a lot more tweaking to make this dynamic]
-  newLives = 1;
-  // newLives     = parseInt(document.getElementById("live-count").value)*newGameSize/newMaxFlip;
+  newLives     = parseInt(document.getElementById("live-count").value)*newGameSize/newMaxFlip;
     // number of mistakes is weighted by the relative game size and hand size
 
   // gameParameters = createGameParameters(15,2,2,60);
