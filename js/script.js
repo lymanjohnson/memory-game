@@ -117,12 +117,12 @@ function buildBoard(){  //make it instantiate based on parameters
   lifeCounter.innerHTML="";
   totalSeconds = 0;
 
-  for (let i=0;i<gameParameters.lives;i++){
+  // for (let i=0;i<gameParameters.lives;i++){
     let lifeIcon = document.createElement("img");
     lifeIcon.setAttribute("src","img/025.ico");
     lifeIcon.classList.add("life-icon");
     lifeCounter.appendChild(lifeIcon);
-  }
+  // }
 
   // let lifeIcon = document.createElement("img");
   // lifeIcon.setAttribute("src","img/025.ico");
@@ -425,5 +425,5 @@ function markCardsHidden (hand) {   // hand will be an array that contains the i
     gameDeck[hand[i]].status = "hidden";
   }
   currentFlippedCards = [];
-  lifeCounter.removeChild(lifeCounter.lastChild);
+  // lifeCounter.removeChild(lifeCounter.lastChild);
 }
