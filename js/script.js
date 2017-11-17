@@ -57,7 +57,7 @@ function createGameParameters(size,flips,delay,lives){
                       { "gameSize":size,
                         "maxFlip":flips,
                         "turnDelay":delay,
-                        "lives":lives};
+                        "lives":Math.ceil(lives)};
   return parameters;
 }
 
@@ -75,7 +75,7 @@ function buttonPressed() { //will redefine the global game parameters based on p
   newGameSize  = parseInt(document.getElementById("game-size").value);
   newMaxFlip   = parseInt(document.getElementById("hand-size").value);
   newTurnDelay = 2;   //[will require a lot more tweaking to make this dynamic]
-  newLives     = parseInt(document.getElementById("live-count").value)*newGameSize/newMaxFlip;
+  newLives     = Math.ceil(parseInt(document.getElementById("live-count").value)*newGameSize/newMaxFlip);
     // number of mistakes is weighted by the relative game size and hand size
 
   // gameParameters = createGameParameters(15,2,2,60);
@@ -122,8 +122,14 @@ function buildBoard(){  //make it instantiate based on parameters
     lifeIcon.setAttribute("src","img/025.ico");
     lifeIcon.classList.add("life-icon");
     lifeCounter.appendChild(lifeIcon);
-
   }
+
+  // let lifeIcon = document.createElement("img");
+  // lifeIcon.setAttribute("src","img/025.ico");
+  // lifeIcon.classList.add("life-icon");
+  // lifeCounter.appendChild(lifeIcon);
+  // lifeNumber.createTextNode(gameParameters.lives)
+  // lifeCounter.appendChild();
 
   for (let i=0;i<gameDeck.length;i++){
 
