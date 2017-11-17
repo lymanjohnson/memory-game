@@ -119,9 +119,13 @@ function buildBoard(){  //make it instantiate based on parameters
 
   // for (let i=0;i<gameParameters.lives;i++){
     let lifeIcon = document.createElement("img");
+    let lifeNumber = document.createElement("span");
+    lifeNumber.setAttribute("id","life-number");
+    lifeNumber.innerHTML = gameParameters.lives;
     lifeIcon.setAttribute("src","img/025.ico");
     lifeIcon.classList.add("life-icon");
     lifeCounter.appendChild(lifeIcon);
+    lifeCounter.appendChild(lifeNumber);
   // }
 
   // let lifeIcon = document.createElement("img");
@@ -197,6 +201,8 @@ function isGameOver(){
 
 function deductHealth(){
   gameParameters.lives -= 1/gameParameters.maxFlip;
+  lifeNumber = document.getElementById("life-number")
+  lifeNumber.innerHTML = Math.ceil(gameParameters.lives)
 }
 
 function playerWins(){
@@ -205,6 +211,8 @@ function playerWins(){
   let theBoard    = document.getElementById("board");
   let winScreen  = document.getElementById("win-screen");
   theBoard.classList.add("invisible");
+  lossScreen.classList.remove("flex");
+  lossScreen.classList.add("invisible");
   winScreen.classList.remove("invisible");
   winScreen.classList.add("flex");
 
@@ -234,6 +242,7 @@ function startOver(){
   theBoard.classList.add("invisible");
   theWrapper.classList.remove("invisible");
   winScreen.classList.add("invisible");
+  lossScreen.classList.remove("flex")
   lossScreen.classList.add("invisible");
   musicSelect.currentTime = 12.25;
   musicSelect.play();
@@ -426,4 +435,5 @@ function markCardsHidden (hand) {   // hand will be an array that contains the i
   }
   currentFlippedCards = [];
   // lifeCounter.removeChild(lifeCounter.lastChild);
+  // lifeNumber.innerHTML
 }

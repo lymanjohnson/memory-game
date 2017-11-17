@@ -33,6 +33,12 @@ li {
   color: red;
 }
 
+#life-number {
+  font-family: monospace;
+  font-size: 16pt;
+  color: red;
+}
+
 li img {
   width: 100%;
   /*margin: 5%;*/
